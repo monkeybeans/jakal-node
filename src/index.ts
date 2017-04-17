@@ -1,31 +1,26 @@
 import * as express from 'express';
-import { MetaController } from './controllers';
+import { dynamicsRouter, historyRouter, metaRouter } from './routes';
 
 const server = express();
+const PORT = 8085;
 
-server.get('/', (req: express.Request, res: express.Response) => {
+server
+.use((req, res, next) => {
+  console.log(`[${Date.now()}] ${req.baseUrl}`);
+  next();
+})
+.get('/', (req: express.Request, res: express.Response) => {
   res.send('should be some description...');
-});
-
-server.get('/ping', (req: express.Request, res: express.Response) => {
+})
+.get('/ping', (req: express.Request, res: express.Response) => {
   res.send('pong');
 });
 
-server.use('/meta', MetaController);
+server
+.use('/api/v1', metaRouter)
+.use('/api/v1', dynamicsRouter)
+.use('/api/v1', historyRouter);
 
-const router: express.Router = express.Router();
-
-router.use((req, res, next) => {
-  console.log(`Time: ${Date.now()}`);
-  next();
-});
-
-router.get('/config', (req, res) => {
-  res.send('This will be some configuration...');
-});
-
-server.use('/banan', router);
-
-server.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
+server.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}!`);
 });
