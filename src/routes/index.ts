@@ -1,4 +1,6 @@
 import * as express from 'express';
+import ConfigTemplate from '../templates/ConfigTemplate';
+
 const metaRouter: express.Router = express.Router();
 const dynamicsRouter: express.Router = express.Router();
 const historyRouter: express.Router = express.Router();
@@ -9,19 +11,20 @@ const historyRouter: express.Router = express.Router();
 // });
 
 metaRouter.get('/config', (req, res) => {
-  res.send('This will be some configuration...');
+    const config = new ConfigTemplate();
+    res.send('This will be some configuration...');
 });
 
 dynamicsRouter.get('/dynamics', (req, res) => {
-  res.send('This will be some dynamics...');
+    res.send('This will be some dynamics...');
 });
 
 historyRouter.get('/history', (req, res) => {
-  res.send('This will be some history...');
+    res.send('This will be some history...');
 });
 
 export {
-  metaRouter,
-  dynamicsRouter,
-  historyRouter,
+    metaRouter,
+    dynamicsRouter,
+    historyRouter,
 };
