@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { dynamicsRouter, historyRouter, metaRouter } from './routes';
 
 const server = express();
@@ -9,10 +9,10 @@ server
   console.log(`[${Date.now()}] ${req.baseUrl}`);
   next();
 })
-.get('/', (req: express.Request, res: express.Response) => {
+.get('/', (req, res) => {
   res.send('should be some description...');
 })
-.get('/ping', (req: express.Request, res: express.Response) => {
+.get('/ping', (req, res) => {
   res.send('pong');
 });
 

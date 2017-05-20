@@ -4,19 +4,16 @@
   "description": "api server for application jakal",
   "main": "./src/index.ts",
   "scripts": {
-    "test": "tsc && ava",
-    "build": "tsc",
-    "start": "node ./dist/index.js"
+    "test": "ava",
+    "start": "babel-node ./src/index.js",
+    "build": "babel src --out-dir dist"
   },
   "author": "monkeybean",
   "license": "ISC",
   "ava": {
     "files": [
-      "dist/**/*.test.js"
+      "src/**/*.test.js"
     ],
-    "concurrency": 5,
-    "failWithoutAssertions": false,
-    "powerAssert": false,
     "require": [
       "babel-register",
       "babel-polyfill"
@@ -24,17 +21,14 @@
     "babel": "inherit"
   },
   "dependencies": {
-    "@types/core-decorators": "^0.10.32",
-    "@types/express": "^4.0.35",
-    "core-decorators": "^0.17.0",
     "express": "^4.15.2"
   },
   "devDependencies": {
     "ava": "^0.19.1",
+    "babel-cli": "^6.24.1",
     "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
     "babel-register": "^6.24.1",
-    "eslint": "^3.19.0",
-    "tslint": "^5.1.0",
-    "typescript": "^2.2.2"
+    "eslint": "^3.19.0"
   }
 }

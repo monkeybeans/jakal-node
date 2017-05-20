@@ -1,9 +1,9 @@
 import * as express from 'express';
 import ConfigTemplate from '../templates/ConfigTemplate';
 
-const metaRouter: express.Router = express.Router();
-const dynamicsRouter: express.Router = express.Router();
-const historyRouter: express.Router = express.Router();
+const metaRouter = express.Router();
+const dynamicsRouter = express.Router();
+const historyRouter = express.Router();
 
 // router.use((req, res, next) => {
 //   console.log(`Time: ${Date.now()}`);
