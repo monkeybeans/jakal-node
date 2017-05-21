@@ -1,8 +1,12 @@
 import PeriodEnum from '../models/PeriodEnum';
 import { calcDaysToDay, calcDaysFromDay, isDateInBetween } from '../lib/date-calculator';
+import { configModel } from '../db';
 
 class ConfigTemplate {
   constructor() {
+    const date = new Date();
+
+    configModel.find()
     const daysToNextPeriod = null;
     const elapsedPeriodDays = null;
     const period = null;

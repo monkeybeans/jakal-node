@@ -1,5 +1,7 @@
 import express from 'express';
 import { dynamicsRouter, historyRouter, metaRouter } from './routes';
+import { connect } from './db';
+import mongoose from 'mongose';
 
 const server = express();
 const PORT = 8085;
@@ -22,5 +24,6 @@ server
 .use('/api/v1', historyRouter);
 
 server.listen(PORT, () => {
+  connect(mongoose, null, null);
   console.log(`Listening on port ${PORT}!`);
 });
