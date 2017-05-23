@@ -1,14 +1,34 @@
 import test from 'ava';
-import mongoose from 'mongoose';
-import { SuggestionModel, connect } from '../../src/db';
+import { SuggestionModel, PeriodModel, connect } from '../../src/db';
 
-test.beforeEach(() => {
-  connect(mongoose);
+test.before(() => {
+  connect();
 });
 
-test('inserts an suggestion', async t => {
+test.serial('add a period', async t => {
+  await PeriodModel
+  .startPeriod()
+  .then(async () => {
+    const periods = await PeriodModel.find({closed: false});
+    t.is(periods.length, 1, 'Starting period is only one');
+  });
+});
+
+test.serial('closes the periods', async t => {
+  await PeriodModel
+  .closePeriod()
+  .then(async () => {
+    const periods = await PeriodModel.find({closed: false});
+    t.is(periods.length, 0, 'No started period should be available');
+  });
+});
+
+test.serial('inserts an suggestion', async t => {
   const name = `apan apansson ${Date.now()}`;
   const description = 'monkeing aroud in the djungle';
+
+  await PeriodModel
+  .startPeriod();
 
   const model = new SuggestionModel({name, description});
   await model

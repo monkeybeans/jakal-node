@@ -1,7 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
 
-mongoose.Promise = Promise;
-
 const schema = new Schema({
   name: {
     type: String,
@@ -19,11 +17,29 @@ const schema = new Schema({
     type: Date,
     default: Date.now
   },
-  num_om_votes: Number,
-  _period: {
-    type: Schema.Types.ObjectId,
-    ref: 'Period'
-  },
+  num_of_votes: Number,
 });
 
-export default mongoose.model('Suggestion', schema);
+
+schema.statics.getAllInPeriod = (PeriodModel) => {
+  return PeriodModel.getCurrent()
+  .then(period => this.find({ submitted: { $gte: period.startedAt } }));
+};
+
+schema.statics.findById = id => {
+  return this
+  .find({ _id: id });
+};
+
+schema.statics.addVote = id => {
+  return this
+  .find({ _id: id })
+  .then(suggestion => {
+    suggestion.num_of_votes += 1;
+    suggestion.save();
+  });
+};
+
+const Model = mongoose.model('Suggestion', schema);
+
+export default Model;
