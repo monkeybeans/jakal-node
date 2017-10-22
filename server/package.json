@@ -1,5 +1,5 @@
 {
-  "name": "jakal-api-server",
+  "name": "jakal-node",
   "version": "0.0.1",
   "description": "api server for application jakal",
   "main": "./src/index.ts",
