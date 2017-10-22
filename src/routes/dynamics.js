@@ -1,5 +1,7 @@
+import * as express from 'express';
 import { SuggestionModel } from '../db';
 
+const router = express.Router();
 
 function addSuggestion(name, description) {
   const model = new SuggestionModel({ name, description });
@@ -28,7 +30,23 @@ function getWinner() {
   .then(results => results[0]);
 }
 
+router.get('/dynamics/suggestions', async (req, res) => {
+  const response = await getSuggestions();
+  res.json(response);
+});
+
+router.post('/dynamics/suggestion/:id/vote', async (req, res) => {
+  const response = await voteOnSuggestion(req.params.id);
+  res.json(response);
+});
+
+router.post('/dynamics/suggestion', async (req, res) => {
+  const response = await addSuggestion(req.body.name, req.body.description);
+  res.json(response);
+});
+
 export {
+  router as default,
   getSuggestions,
   addSuggestion,
   voteOnSuggestion,

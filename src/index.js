@@ -1,15 +1,16 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import { dynamicsRouter, historyRouter, metaRouter } from './routes';
-import { connect } from './db';
-import mongoose from 'mongose';
+import connect from './db';
 //import { dailySchedule } from './lib/schedule';
 
 const server = express();
 const PORT = 8085;
 
 server
+.use(bodyParser.json())
 .use((req, res, next) => {
-  console.log(`[${Date.now()}] ${req.baseUrl}`);
+  console.log(`[${new Date()}] ${req.originalUrl}`);
   next();
 })
 .get('/', (req, res) => {
@@ -25,7 +26,7 @@ server
 .use('/api/v1', historyRouter);
 
 server.listen(PORT, () => {
-  connect(mongoose, null, null);
+  connect();
 
   // dailySchedule.task();
   // dailySchedule.job.start();
