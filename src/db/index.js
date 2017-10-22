@@ -19,12 +19,12 @@ const connect = (/*, username, password */) => {
     mongoose.connect('mongodb://localhost/jakal');
   }
 
-  const db = mongoose.connection;
+  const connection = mongoose.connection;
   //db.onse('open', () => {});
-  db.on('open', console.info.bind(console, 'MongoDB connection established...'));
-  db.on('error', console.error.bind(console, 'MongoDB connection error: '));
+  connection.on('open', console.info.bind(console, 'MongoDB connection established...'));
+  connection.on('error', console.error.bind(console, 'MongoDB connection error: '));
 
-  return db;
+  return connection;
 }
 
 
