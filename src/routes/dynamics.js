@@ -30,9 +30,10 @@ function getWinner() {
   .then(results => results[0]);
 }
 
-router.get('/dynamics/suggestions', async (req, res) => {
-  const response = await getSuggestions();
-  res.json(response);
+router.get('/dynamics/suggestions', (req, res, next) => {
+  getSuggestions()
+    .then(data => res.json(data))
+    .catch(next);
 });
 
 router.post('/dynamics/suggestion/:id/vote', async (req, res) => {
