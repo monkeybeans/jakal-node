@@ -4,7 +4,7 @@
   "description": "api server for application jakal",
   "main": "./src/index.ts",
   "scripts": {
-    "test": "ava",
+    "test": "NODE_ENV=test ava",
     "start": "babel-node ./src/index.js",
     "build": "babel src --out-dir dist"
   },
@@ -19,19 +19,21 @@
       "babel-register",
       "babel-polyfill"
     ],
-    "babel": "inherit"
+    "babel": "inherit",
+    "serial": true
   },
   "dependencies": {
     "express": "^4.15.2",
-    "mongoose": "^4.10.0"
+    "mongoose": "^4.10.0",
+    "node-cron": "^1.1.3"
   },
   "devDependencies": {
-    "ava": "^0.19.1",
+    "ava": "^0.22.0",
     "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.3",
+    "babel-eslint": "^8.0.1",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.4.0",
     "babel-register": "^6.24.1",
-    "eslint": "^3.19.0"
+    "eslint": "^4.9.0"
   }
 }

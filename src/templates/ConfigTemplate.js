@@ -1,4 +1,4 @@
-import PeriodEnum from '../models/PeriodEnum';
+import PeriodEnum from '../types/PeriodEnum';
 import { calcDaysToDay, calcDaysFromDay, isDateInBetween } from '../lib/date-calculator';
 import { configModel } from '../db';
 

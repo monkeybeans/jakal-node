@@ -2,6 +2,7 @@ import express from 'express';
 import { dynamicsRouter, historyRouter, metaRouter } from './routes';
 import { connect } from './db';
 import mongoose from 'mongose';
+//import { dailySchedule } from './lib/schedule';
 
 const server = express();
 const PORT = 8085;
@@ -25,5 +26,9 @@ server
 
 server.listen(PORT, () => {
   connect(mongoose, null, null);
+
+  // dailySchedule.task();
+  // dailySchedule.job.start();
+
   console.log(`Listening on port ${PORT}!`);
 });
