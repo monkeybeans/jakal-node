@@ -1,6 +1,6 @@
 import test from 'ava';
-import { calculatePeriodState } from './config';
-import PeriodType from '../types/PeriodType';
+import { calculatePeriodState } from '../config';
+import PeriodType from '../../types/PeriodType';
 
 test('Calculationg the config date no overlap', t => {
   const today = new Date(2100, 1, 1);

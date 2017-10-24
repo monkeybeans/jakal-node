@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import SuggestionModel from './suggestion-model';
-import PeriodModel from './period-model';
 import UserModel from './user-model';
 
 const isInTestEnv = process.env.NODE_ENV === 'test';
@@ -32,5 +31,4 @@ export {
   connect as default,
   SuggestionModel,
   UserModel,
-  PeriodModel,
 }

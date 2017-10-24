@@ -15,11 +15,23 @@ function getSuggestions() {
 
 function voteOnSuggestion(suggestionId) {
   return SuggestionModel
-    .findOneAndUpdate(
-      { _id: suggestionId },
-      { $inc: { 'voting.num_of_votes': 1 } },
-      { new: true },
-    );
+    .findOne({ _id: suggestionId })
+    .then(suggestion => {
+      if (suggestion === null) {
+        throw new Error(`Voting failed: suggesiont Id(${suggestionId}) was not found.`);
+      }
+
+      if (suggestion.voting.stage !== 'LISTED') {
+        throw new Error(`Voting failed: suggesiont Id(${suggestionId}) wrong stage(${suggestion.voting.stage}).`);
+      }
+
+      return SuggestionModel.findOneAndUpdate(
+        { _id: suggestionId },
+        { $inc: { 'voting.num_of_votes': 1 } },
+        { new: true },
+      );
+
+    })
 }
 
 function getWinner() {

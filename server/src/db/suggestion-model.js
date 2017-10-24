@@ -28,6 +28,11 @@ const schema = new Schema({
       type: Date,
       default: null,
     },
+    stage: {
+      type: String,
+      enum: ['PICKED', 'REJECTED', 'LISTED'],
+      default: 'LISTED',
+    },
     vote_round: {
       type: Number,
       default: 1,
