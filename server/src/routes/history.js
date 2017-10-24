@@ -1,19 +1,13 @@
 import * as express from 'express';
-import { SuggestionModel } from '../../src/db';
+import { getPickedSuggestions } from '../lib/scheduled/voting-util';
 
 const router = express.Router();
 
-function getHistory() {
-  return SuggestionModel
-    .find({ winner: true });
-}
-
 router.get('/history', (req, res) => {
-  res.json(getHistory());
+  res.json(getPickedSuggestions());
 });
 
 
 export {
   router as default,
-  getHistory,
 }

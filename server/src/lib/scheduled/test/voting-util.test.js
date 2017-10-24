@@ -1,6 +1,9 @@
 import test from 'ava';
 import connect, { SuggestionModel } from '../../../db';
-import { getPickedSuggestions, startVoting } from '../voting-util';
+import {
+  getPickedSuggestions,
+  startVoting,
+  finalizeVoting } from '../voting-util';
 import {
   addSuggestion,
   voteOnSuggestion,
@@ -38,7 +41,7 @@ test('Picks out the winner for the latest voting round', async t => {
 
   await startVoting()
     .then(() => voteOnSuggestion(ss._id))
+    .then(() => finalizeVoting())
     .then(() => getPickedSuggestions())
-    .then(ss => console.log(ss));
-
+    .then(ss => t.is(ss[0].name, 'name2'));
 });

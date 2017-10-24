@@ -40,7 +40,7 @@ test('get the current suggestions', async t => {
   t.is(result.length, 3);
 })
 
-test.failing('votes on a suggestion', async t => {
+test('votes on a suggestion', async t => {
   const suggestion = await addSuggestion('name1', 'description1');
   const result = await voteOnSuggestion(suggestion._id);
 
@@ -48,7 +48,7 @@ test.failing('votes on a suggestion', async t => {
 });
 
 
-test.failing('picks out the suggestions with the most votes', async t => {
+test('picks out the suggestions with the most votes', async t => {
   await addSuggestion('name1', 'description1');
   await addSuggestion('name2', 'description2');
   const favourite = await addSuggestion('name3', 'description3');
