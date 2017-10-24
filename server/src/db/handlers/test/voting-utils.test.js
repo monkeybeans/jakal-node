@@ -1,13 +1,13 @@
 import test from 'ava';
-import connect, { SuggestionModel } from '../../../db';
+import connect, { SuggestionModel } from '../../models';
 import {
   getPickedSuggestions,
   startVoting,
-  finalizeVoting } from '../voting-util';
+  finalizeVoting } from '../voting-utils';
 import {
   addSuggestion,
   voteOnSuggestion,
-} from '../../../routes/dynamics';
+} from '../suggestions';
 
 
 test.before(async () => {

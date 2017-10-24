@@ -1,5 +1,5 @@
 import test from 'ava';
-import { calcDaysToDay, calcDaysFromDay, isDateInBetween } from './date-calculator';
+import { calcDaysToDay, calcDaysFromDay, isDateInBetween } from '../date-calculator';
 
 test('Calculate number of days to a future day date', t => {
   const today = new Date(2035, 1, 10);

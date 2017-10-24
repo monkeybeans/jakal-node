@@ -1,4 +1,4 @@
-import { SuggestionModel } from '../../db';
+import { SuggestionModel } from '../models';
 
 
 function startVoting() {
