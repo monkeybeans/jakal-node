@@ -20,10 +20,9 @@ function getPickedSuggestions(limit = 50) {
     .limit(limit);
 }
 
-function finalizeVoting() {
+function reolveSuggestionAsPickedAndRejected() {
   const idsOfPicked = suggestions => {
     let highestVote = 0;
-
     return suggestions.reduce((picked, s) => {
       if (s.voting.num_of_votes > highestVote) {
         picked = [s._id];
@@ -32,7 +31,6 @@ function finalizeVoting() {
         picked.push(s._id);
         highestVote = s.voting.num_of_votes;
       }
-
       return picked;
     }, []);
   };
@@ -49,5 +47,5 @@ function finalizeVoting() {
 export {
   getPickedSuggestions,
   startVoting,
-  finalizeVoting,
+  reolveSuggestionAsPickedAndRejected,
 }

@@ -3,6 +3,7 @@ import { SuggestionModel } from '../models';
 function addSuggestion(name, description) {
   const model = new SuggestionModel({ name, description });
 
+  //@TODO: send notification mail
   return model.save();
 }
 

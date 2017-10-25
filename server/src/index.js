@@ -1,8 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { dynamicsRouter, historyRouter, configRouter } from './routes';
-import connect from './db';
-//import { dailySchedule } from './lib/schedule';
+import connect from './db/models';
+import { actUponPeriodChangeSchedule } from './scheduled';
 
 const server = express();
 const PORT = 8085;
@@ -39,8 +39,7 @@ server
 server.listen(PORT, () => {
   connect();
 
-  // dailySchedule.task();
-  // dailySchedule.job.start();
+  actUponPeriodChangeSchedule.start();
 
   console.log(`Listening on port ${PORT}!`);
 });

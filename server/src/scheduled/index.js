@@ -1,47 +1,59 @@
-import config from '../../config/application-properties.json';
-import { CronJob } from 'node-cron';
-import { isDateInBetween, calcDaysFromDay } from '../date-calculator';
-import { SuggestionModel } from '../../db';
+import { CronJob } from 'cron';
+import settings from '../settings';
+import { calculatePeriodState } from '../lib/period-calculator';
+import PeriodType from '../types/PeriodType';
+import {
+  startVoting,
+  reolveSuggestionAsPickedAndRejected } from '../db/handlers/voting-utils';
 
 const TIME_ZONE = 'Europe/Berlin';
 
-const dailySchedule = {
-  task: () => {
-    const {
-      period_suggest_start_day,
-      period_voting_start_day,
-      period_display_start_day,
-    } = config;
-
-    const currentDate = new Date();
-    // suggestion
-    if (isDateInBetween(period_suggest_start_day, period_voting_start_day, currentDate)) {
-      if (calcDaysFromDay(period_suggest_start_day, currentDate) === 0){
-      }
-    }
-    // vote
-    else if (isDateInBetween(period_voting_start_day, period_display_start_day, currentDate)) {
-      if (calcDaysFromDay(period_voting_start_day, currentDate) === 0){
-        SuggestionModel.startVoting();
-      }
-    }
-    // display
-    else if (isDateInBetween(period_display_start_day, period_display_start_day, currentDate)) {
-
-    } else {
-      throw Error('Could not descide period');
-    }
-  },
-
-  job: new CronJob(
-    '00 00 02 * * *',
-    dailySchedule.task,
-    console.log.bind(console, 'Day task run'),
-    false,
-    TIME_ZONE
-  ),
+const sendMail = (msg) => {
+  console.log('this would be some mail sent: ', msg);
 }
 
+const actUponPeriodChange = () => {
+  const {
+    days_to_next_period,
+    elapsed_period_days,
+    period,
+  } = calculatePeriodState({ today: new Date(), settings });
+
+  console.info(`Checking period: ${period}, elapsed days: ${elapsed_period_days}, next period in days: ${days_to_next_period}`);
+
+  // SUGGEST
+  if (period === PeriodType.SUGGEST) {
+    if (elapsed_period_days === 0){
+      sendMail(`period ${period} started!!`);
+    }
+  }
+  // VOTE
+  else if (period === PeriodType.VOTE) {
+    if (elapsed_period_days === 0){
+      startVoting();
+      sendMail(`period ${period} started!!`);
+    }
+  }
+  // DISPLAY
+  else if (period === PeriodType.DISPLAY) {
+    if (elapsed_period_days === 0){
+      reolveSuggestionAsPickedAndRejected();
+      sendMail(`period ${period} started!!`);
+    }
+  } else {
+    throw Error('Could not descide period');
+  }
+};
+
+
+const actUponPeriodChangeSchedule = new CronJob({
+  cronTime: '00 00 02 * * *',
+  onTick: actUponPeriodChange,
+  startNow: false,
+  runOnInit: true,
+  timeZone: TIME_ZONE,
+});
+
 export {
-  dailySchedule,
+  actUponPeriodChangeSchedule,
 }

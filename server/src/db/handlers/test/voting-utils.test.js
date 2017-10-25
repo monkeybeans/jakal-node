@@ -3,7 +3,7 @@ import connect, { SuggestionModel } from '../../models';
 import {
   getPickedSuggestions,
   startVoting,
-  finalizeVoting } from '../voting-utils';
+  reolveSuggestionAsPickedAndRejected } from '../voting-utils';
 import {
   addSuggestion,
   voteOnSuggestion,
@@ -41,7 +41,7 @@ test('Picks out the winner for the latest voting round', async t => {
 
   await startVoting()
     .then(() => voteOnSuggestion(ss._id))
-    .then(() => finalizeVoting())
+    .then(() => reolveSuggestionAsPickedAndRejected())
     .then(() => getPickedSuggestions())
     .then(ss => t.is(ss[0].name, 'name2'));
 });
