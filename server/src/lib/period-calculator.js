@@ -2,35 +2,45 @@ import PeriodType from '../types/PeriodType';
 import {
   calcDaysToDay,
   calcDaysFromDay,
-  isDateInBetween,
 } from './date-calculator';
 
-const incrementToOverlappingDaysInDate = (date, numDays) => {
-  const cloneDate = new Date(date);
+function calculatePeriodState({ settings, today }) {
+  const times = [
+    { period: PeriodType.SUGGEST,
+      day: settings.period_suggest_start_day,
+    },
+    { period: PeriodType.VOTE,
+      day: settings.period_voting_start_day,
+    },
+    { period: PeriodType.DISPLAY,
+      day: settings.period_display_start_day,
+    },
+  ];
 
-  if (cloneDate.getDate() < numDays) {
-    cloneDate.setDate(numDays + 1);
-  } else if (cloneDate.getDate() > numDays) {
-    cloneDate.setDate(numDays + cloneDate.getDate());
-  } else {
-    //do nothing
+  const isDayInTime = day => time => time.day === day ? time : null;
+
+  const resolvePeriod = () => {
+    let dayNum = today.getDate();
+    while(true) {
+      const time = times.find(isDayInTime(dayNum));
+
+      if (time) {
+        return time;
+      }
+
+      dayNum > 0 ? (dayNum -= 1) : (dayNum += 31);
+    }
   }
 
-  return cloneDate;
-};
+  const time = resolvePeriod();
 
-function calculatePeriodState({ settings, today }) {
-  const suggestDate = incrementToOverlappingDaysInDate(today, settings.period_suggest_start_day);
-  const votingDate = incrementToOverlappingDaysInDate(today, settings.period_voting_start_day);
-  const displayDate = incrementToOverlappingDaysInDate(today, settings.period_display_start_day);
-
-  if (isDateInBetween(suggestDate, votingDate, today)) {
+  if (time.period === PeriodType.SUGGEST) {
     return {
       period: PeriodType.SUGGEST,
       days_to_next_period: calcDaysToDay(settings.period_voting_start_day, today),
       elapsed_period_days: calcDaysFromDay(settings.period_suggest_start_day, today),
     }
-  } else if (isDateInBetween(votingDate, displayDate, today)) {
+  } else if (time.period === PeriodType.VOTE) {
     return {
       period: PeriodType.VOTE,
       days_to_next_period: calcDaysToDay(settings.period_display_start_day, today),

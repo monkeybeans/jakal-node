@@ -37,9 +37,8 @@ server
 .use(errorHandler);
 
 server.listen(PORT, () => {
-  connect();
-
-  actUponPeriodChangeSchedule.start();
-
   console.log(`Listening on port ${PORT}!`);
+
+  connect();
+  actUponPeriodChangeSchedule.start();
 });
