@@ -26,7 +26,13 @@ const actUponPeriodChange = () => {
   // SUGGEST
   if (period === PeriodType.SUGGEST) {
     if (elapsed_period_days === 0){
-      sendMail(`period ${period} started!!`);
+      const mail = new MailSender();
+
+      // mail
+      // .setTo(addresses)
+      // .setSubject(subject)
+      // .setHtml(html)
+      // .send();
     }
   }
   // VOTE

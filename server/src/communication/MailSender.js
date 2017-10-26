@@ -45,7 +45,7 @@ export default class MailSender {
           }
         });
     } else {
-      log(`Mail disabled for ${process.NODE_ENV}, but would have sent: ${this.optionsto}`);
+      log(`Mail disabled for ${process.NODE_ENV}, but would have sent: ${JSON.stringify(this.options, null, 2)}`);
     }
   }
 }
