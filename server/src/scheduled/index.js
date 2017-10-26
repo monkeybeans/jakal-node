@@ -5,11 +5,12 @@ import PeriodType from '../types/PeriodType';
 import {
   startVoting,
   reolveSuggestionAsPickedAndRejected } from '../db/handlers/voting-utils';
+import log from '../lib/logger';
 
 const TIME_ZONE = 'Europe/Berlin';
 
 const sendMail = (msg) => {
-  console.log('this would be some mail sent: ', msg);
+  log.info('this would be some mail sent: ', msg);
 }
 
 const actUponPeriodChange = () => {
@@ -19,7 +20,7 @@ const actUponPeriodChange = () => {
     period,
   } = calculatePeriodState({ today: new Date(), settings });
 
-  console.info(`Checking period: ${period}, elapsed days: ${elapsed_period_days}, next period in days: ${days_to_next_period}`);
+  log(`Checking period: ${period}, elapsed days: ${elapsed_period_days}, next period in days: ${days_to_next_period}`);
 
   // SUGGEST
   if (period === PeriodType.SUGGEST) {
