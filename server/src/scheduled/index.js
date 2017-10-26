@@ -6,6 +6,7 @@ import {
   startVoting,
   reolveSuggestionAsPickedAndRejected } from '../db/handlers/voting-utils';
 import log from '../lib/logger';
+import MailSender from '../communications/MailSender';
 
 const TIME_ZONE = 'Europe/Berlin';
 

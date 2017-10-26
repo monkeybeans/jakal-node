@@ -1,4 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import { Schema } from 'mongoose';
+import connect from './connect';
+
+const connection = connect();
 
 const schema = new Schema({
   name: {
@@ -13,14 +16,6 @@ const schema = new Schema({
   password: String,
 });
 
-schema.methods.add = (name, emails, password) => {
-  this.name = name;
-  this.emails = emails;
-  this.password = password;
+const UserModel = connect().model('User', schema);
 
-  return this.save();
-}
-
-const Model = mongoose.model('User', schema);
-
-export default Model;
+export default UserModel;

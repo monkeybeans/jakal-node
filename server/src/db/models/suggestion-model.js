@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
+import { Schema } from 'mongoose';
+import connect from './connect';
 
 const schema = new Schema({
   name: {
@@ -40,6 +41,6 @@ const schema = new Schema({
   },
 });
 
-const Model = mongoose.model('Suggestion', schema);
+const SuggestionModel = connect().model('Suggestion', schema);
 
-export default Model;
+export default SuggestionModel;
