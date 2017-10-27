@@ -1,27 +1,26 @@
 import nodemailer from 'nodemailer';
 import log from '../lib/logger';
-import { parseArgs, loadSecret } from '../lib/arg-utils';
+import { parseArgs, loadSecret, isProduction } from '../lib/arg-utils';
 
 const argv = parseArgs(process.argv.slice(2));
 const secret = loadSecret(argv.secretPath);
 
 export default class MailSender {
-  constructor() {
-    const { username, password } = secret.mail;
+  constructor({ to, subject, text, html, from }) {
+    const { username, password } = secret.mail || {};
 
     this.user = username;
     this.pass = password;
     this.options = {
-      from: username,
+      from: from || username,
+      to,
+      subject,
+      text,
+      html,
     };
-    this.transport = this.createTransport();
-  }
 
-  setFrom(from) { this.options.from = from; return this; }
-  setTo(to) { this.options.to = to; return this; }
-  setSubject (subject) { this.options.subject = subject; return this; }
-  setText(text) { this.options.text = text; return this; }
-  setHtml(html) { this.options.html = html; return this; }
+    this.transporter = this.createTransport();
+  }
 
   createTransport() {
     return nodemailer.createTransport({
@@ -34,7 +33,7 @@ export default class MailSender {
   }
 
   send() {
-    if (process.NODE_ENV === 'production') {
+    if (isProduction()) {
       this.transporter.sendMail(
         this.options,
         (error, info) => {
@@ -45,7 +44,7 @@ export default class MailSender {
           }
         });
     } else {
-      log(`Mail disabled for ${process.NODE_ENV}, but would have sent: ${JSON.stringify(this.options, null, 2)}`);
+      log(`Mail disabled for ${process.env.NODE_ENV}, but would have sent: ${JSON.stringify(this.options, null, 2)}`);
     }
   }
 }

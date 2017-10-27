@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import log from '../../lib/logger';
-
-const isInTestEnv = process.env.NODE_ENV === 'test';
+import { isProduction, isTest, isDevelopment, getEnvironment } from '../../lib/arg-utils';
 
 let connection = null;
 
@@ -12,19 +11,18 @@ const connect = (/*, username, password */) => {
   //const query = Object.keys(options).map(k => `k=options[k]`).join(',');
   //mongoose.connect(`mongodb://${username}:${password}@${host}:${port}/${database}?${query}`);
 
-  const getUri = (useTestUri) => {
-    if (useTestUri) {
+  const getUri = () => {
+    if (isTest()) {
       log('# using test database #');
       return 'mongodb://localhost/jakal_testing';
-    } else {
+    } else if (isDevelopment() || isProduction()) {
       return 'mongodb://localhost/jakal';
+    } else {
+      throw new Error(`Unknown environment(${getEnvironment()}), could not descide monogo uri`);
     }
   }
 
-  connection = mongoose.createConnection(
-    getUri(isInTestEnv),
-    //{ useMongoClient: true, /* to avoid warning :[] */ }
-  );
+  connection = mongoose.createConnection(getUri());
 
   //mongoose.connection;
   //db.onse('open', () => {});

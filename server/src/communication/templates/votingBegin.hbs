@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+  <h1>Time to vote on your favourite instrument!</h1>
+  <p>
+    This month instruments are:
+    <ul>
+      {{#each suggestions}}
+        <li>
+          {{ this.name }}
+        </li>
+      {{/each}}
+    </ul>
+  </p>
+  <p>
+    Go to <a href="{{ SITE_URL }}">jakal page</a> and add your vote!
+  </p>
+</body>
+</html>

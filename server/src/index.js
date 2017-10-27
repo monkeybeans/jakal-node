@@ -4,6 +4,7 @@ import { dynamicsRouter, historyRouter, configRouter } from './routes';
 import connect from './db/models';
 import { actUponPeriodChangeSchedule } from './scheduled';
 import log from './lib/logger';
+import { getEnvironment } from './lib/arg-utils';
 
 const server = express();
 const PORT = 8085;
@@ -20,7 +21,7 @@ function ping(req, res) {
 }
 
 function logger(req, res, next) {
-  log(`GET ${req.originalUrl}`);
+  log(`${req.method} ${req.originalUrl}`);
   next();
 }
 
@@ -35,6 +36,7 @@ server
 
 server.listen(PORT, () => {
   log(`Listening on port ${PORT}!`);
+  log(`Running in environment: ${getEnvironment()}`);
 
   connect();
   actUponPeriodChangeSchedule.start();

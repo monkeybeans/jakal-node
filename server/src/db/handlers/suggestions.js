@@ -1,10 +1,32 @@
-import { SuggestionModel } from '../models';
+import { SuggestionModel, UserModel } from '../models';
+import MailSender from '../../communication/MailSender';
+import { newSuggestionHTML } from '../../communication/templates'
+import log from '../../lib/logger';
+
+const flatten = arr => arr.reduce((flat, a) => { return [...flat, ...a]; }, []);
 
 function addSuggestion(name, description) {
   const model = new SuggestionModel({ name, description });
 
-  //@TODO: send notification mail
-  return model.save();
+  return model
+  .save()
+  .then(reply => {
+    //do this async
+    UserModel
+    .find({}, { emails: 1 })
+    .then(addresses => {
+      new MailSender({
+        to: flatten(addresses.map(a => a.emails)),
+        subject: `New suggestion: ${name}`,
+        html: newSuggestionHTML({ name, description }),
+      }).send();
+    })
+    .catch(e => {
+      log.error('Could not send mail: ', e);
+    });
+
+    return reply;
+  });
 }
 
 function getSuggestions() {

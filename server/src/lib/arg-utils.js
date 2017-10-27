@@ -20,3 +20,8 @@ export function loadSecret(path) {
     return {};
   }
 }
+
+export const getEnvironment = () => process.env.NODE_ENV || 'ENVIRONMENT_UNDEFINED';
+export const isProduction = () => getEnvironment() === 'PRODUCTION';
+export const isTest = () => getEnvironment() === 'TEST';
+export const isDevelopment = () => getEnvironment() === 'DEVELOPMENT';
