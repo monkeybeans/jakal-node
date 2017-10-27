@@ -15,12 +15,12 @@ function startVoting() {
 
 function getPickedSuggestions(limit = 50) {
   return SuggestionModel
-    .find({ 'voting.stage': 'PICKED'})
+    .find({ 'voting.condition': 'ENDORSED'})
     .sort('-voting.started')
     .limit(limit);
 }
 
-function reolveSuggestionAsPickedAndRejected() {
+function reolveSuggestionAsEndorsedAndRejected() {
   const idsOfPicked = suggestions => {
     let highestVote = 0;
     return suggestions.reduce((picked, s) => {
@@ -36,16 +36,16 @@ function reolveSuggestionAsPickedAndRejected() {
   };
 
   return SuggestionModel
-    .find({ 'voting.stage': 'LISTED'})
+    .find({ 'voting.condition': 'LISTED'})
     .then(listed => {
       return SuggestionModel
-      .update({ 'voting.stage': 'LISTED' }, { 'voting.stage': 'REJECTED' })
-      .update({ _id: { $in: idsOfPicked(listed) }}, { 'voting.stage': 'PICKED' });
+      .update({ 'voting.condition': 'LISTED' }, { 'voting.condition': 'REJECTED' })
+      .update({ _id: { $in: idsOfPicked(listed) }}, { 'voting.condition': 'ENDORSED' });
     });
 }
 
 export {
   getPickedSuggestions,
   startVoting,
-  reolveSuggestionAsPickedAndRejected,
+  reolveSuggestionAsEndorsedAndRejected,
 }

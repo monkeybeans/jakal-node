@@ -3,7 +3,7 @@ import connect, { SuggestionModel } from '../../models';
 import {
   getPickedSuggestions,
   startVoting,
-  reolveSuggestionAsPickedAndRejected } from '../voting-utils';
+  reolveSuggestionAsEndorsedAndRejected } from '../voting-utils';
 import {
   addSuggestion,
   voteOnSuggestion,
@@ -28,7 +28,7 @@ test('Set start voting date for suggestions', async t => {
     .then(() => startVoting()
       .then(s => {
         t.is(s.length, 2);
-        t.is(s[1].voting.stage, 'LISTED');
+        t.is(s[1].voting.condition, 'LISTED');
       })
   );
 });
@@ -41,7 +41,7 @@ test('Picks out the winner for the latest voting round', async t => {
 
   await startVoting()
     .then(() => voteOnSuggestion(ss._id))
-    .then(() => reolveSuggestionAsPickedAndRejected())
+    .then(() => reolveSuggestionAsEndorsedAndRejected())
     .then(() => getPickedSuggestions())
     .then(ss => t.is(ss[0].name, 'name2'));
 });

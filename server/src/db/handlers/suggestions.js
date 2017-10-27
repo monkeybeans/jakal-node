@@ -1,22 +1,20 @@
-import { SuggestionModel, UserModel } from '../models';
+import { SuggestionModel } from '../models';
+import { getEmailSendList } from './users';
 import MailSender from '../../communication/MailSender';
 import { newSuggestionHTML } from '../../communication/templates'
 import log from '../../lib/logger';
 
-const flatten = arr => arr.reduce((flat, a) => { return [...flat, ...a]; }, []);
-
-function addSuggestion(name, description) {
+export function addSuggestion(name, description) {
   const model = new SuggestionModel({ name, description });
 
   return model
   .save()
   .then(reply => {
     //do this async
-    UserModel
-    .find({}, { emails: 1 })
-    .then(addresses => {
+    getEmailSendList()
+    .then(sendList => {
       new MailSender({
-        to: flatten(addresses.map(a => a.emails)),
+        to: sendList,
         subject: `New suggestion: ${name}`,
         html: newSuggestionHTML({ name, description }),
       }).send();
@@ -29,11 +27,11 @@ function addSuggestion(name, description) {
   });
 }
 
-function getSuggestions() {
-  return SuggestionModel.find();
+export function getListedSuggestions() {
+  return SuggestionModel.find({ 'voting.condition': 'LISTED'});
 }
 
-function voteOnSuggestion(suggestionId) {
+export function voteOnSuggestion(suggestionId) {
   return SuggestionModel
     .findOne({ _id: suggestionId })
     .then(suggestion => {
@@ -41,8 +39,8 @@ function voteOnSuggestion(suggestionId) {
         throw new Error(`Voting failed: suggesiont Id(${suggestionId}) was not found.`);
       }
 
-      if (suggestion.voting.stage !== 'LISTED') {
-        throw new Error(`Voting failed: suggesiont Id(${suggestionId}) wrong stage(${suggestion.voting.stage}).`);
+      if (suggestion.voting.condition !== 'LISTED') {
+        throw new Error(`Voting failed: suggesiont Id(${suggestionId}) wrong condition (${suggestion.voting.condition}).`);
       }
 
       return SuggestionModel.findOneAndUpdate(
@@ -50,12 +48,12 @@ function voteOnSuggestion(suggestionId) {
         { $inc: { 'voting.num_of_votes': 1 } },
         { new: true },
       );
-
     })
 }
 
-export {
-  addSuggestion,
-  getSuggestions,
-  voteOnSuggestion,
+export function getEndorsedSuggestions(limit = 50) {
+  return SuggestionModel
+  .find({ 'voting.condition': 'ENDORSED' })
+  .sort('-submitter.time')
+  .limit(limit);
 }

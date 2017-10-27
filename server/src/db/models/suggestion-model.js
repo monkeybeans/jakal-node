@@ -29,9 +29,9 @@ const schema = new Schema({
       type: Date,
       default: null,
     },
-    stage: {
+    condition: {
       type: String,
-      enum: ['PICKED', 'REJECTED', 'LISTED'],
+      enum: ['ENDORSED', 'REJECTED', 'LISTED'],
       default: 'LISTED',
     },
     vote_round: {

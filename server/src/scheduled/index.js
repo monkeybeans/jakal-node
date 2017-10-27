@@ -4,17 +4,73 @@ import { calculatePeriodState } from '../lib/period-calculator';
 import PeriodType from '../types/PeriodType';
 import {
   startVoting,
-  reolveSuggestionAsPickedAndRejected } from '../db/handlers/voting-utils';
+  reolveSuggestionAsEndorsedAndRejected } from '../db/handlers/voting-utils';
 import log from '../lib/logger';
 import MailSender from '../communication/MailSender';
+import {
+  getListedSuggestions,
+  getEndorsedSuggestions } from '../db/handlers/suggestions';
+import { getEmailSendList } from '../db/handlers/users';
+import {
+  suggestionBeginHTML,
+  votingBeginHTML,
+  votingFinishHTML,
+} from '../communication/templates';
 
 const TIME_ZONE = 'Europe/Berlin';
 
-const sendMail = (msg) => {
-  log.info('this would be some mail sent: ', msg);
+const sendMailSuggest = () =>
+  getEmailSendList()
+  .then(sendList => {
+    const mail = new MailSender({
+      to: sendList,
+      subject: 'Voting has started',
+      html: suggestionBeginHTML(),
+    });
+
+    mail.send();
+  });
+
+
+
+const sendMailVote = () => {
+  const sendMail = sendList =>
+    getListedSuggestions()
+    .then(listed => {
+      const mail = new MailSender({
+        to: sendList,
+        subject: 'Voting has started',
+        html: votingBeginHTML({ suggestions: listed }),
+      });
+
+      mail.send();
+    });
+
+  return getEmailSendList()
+  .then(sendMail);
 }
 
-const actUponPeriodChange = () => {
+const sendMailDisplay = () => {
+  const sendMail = sendList =>
+    getEndorsedSuggestions()
+    .then(endorsed => {
+      const mail = new MailSender({
+        to: sendList,
+        subject: 'Voting is finished',
+        html: votingFinishHTML({ suggestion: endorsed }),
+      });
+
+      mail.send();
+    });
+
+  return getEmailSendList()
+  .then(sendMail);
+}
+
+
+
+
+const actUponPeriodChange = async () => {
   const {
     days_to_next_period,
     elapsed_period_days,
@@ -25,34 +81,29 @@ const actUponPeriodChange = () => {
 
   // SUGGEST
   if (period === PeriodType.SUGGEST) {
-    if (elapsed_period_days === 0){
-      const mail = new MailSender();
-
-      // mail
-      // .setTo(addresses)
-      // .setSubject(subject)
-      // .setHtml(html)
-      // .send();
+    if (elapsed_period_days === 0) {
+      sendMailSuggest();
     }
   }
   // VOTE
   else if (period === PeriodType.VOTE) {
-    if (elapsed_period_days === 0){
-      startVoting();
-      sendMail(`period ${period} started!!`);
+    if (elapsed_period_days === 0) {
+      await startVoting();
+
+      sendMailVote();
     }
   }
   // DISPLAY
   else if (period === PeriodType.DISPLAY) {
-    if (elapsed_period_days === 0){
-      reolveSuggestionAsPickedAndRejected();
-      sendMail(`period ${period} started!!`);
+    if (elapsed_period_days === 0) {
+      await reolveSuggestionAsEndorsedAndRejected();
+
+      sendMailDisplay();
     }
   } else {
     throw Error('Could not descide period');
   }
 };
-
 
 const actUponPeriodChangeSchedule = new CronJob({
   cronTime: '00 00 02 * * *',
