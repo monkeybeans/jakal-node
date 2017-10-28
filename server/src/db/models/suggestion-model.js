@@ -25,14 +25,9 @@ const schema = new Schema({
       type: Number,
       default: 0,
     },
-    started: {
-      type: Date,
-      default: null,
-    },
-    condition: {
-      type: String,
-      enum: ['ENDORSED', 'REJECTED', 'LISTED'],
-      default: 'LISTED',
+    isEndorsed: {
+      type: Boolean,
+      default: false,
     },
     vote_round: {
       type: Number,

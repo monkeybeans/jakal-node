@@ -3,7 +3,6 @@ import settings from '../settings';
 import { calculatePeriodState } from '../lib/period-calculator';
 import PeriodType from '../types/PeriodType';
 import {
-  startVoting,
   reolveSuggestionAsEndorsedAndRejected } from '../db/handlers/voting-utils';
 import log from '../lib/logger';
 import MailSender from '../communication/MailSender';
@@ -21,7 +20,7 @@ const TIME_ZONE = 'Europe/Berlin';
 
 const sendMailSuggest = () =>
   getEmailSendList()
-  .then(sendLis() => {
+  .then(sendList => {
     const mail = new MailSender({
       to: sendList,
       subject: 'Voting has started',
@@ -83,8 +82,6 @@ const actUponPeriodChange = async () => {
   // VOTE
   else if (period === PeriodType.VOTE) {
     if (elapsed_period_days === 0) {
-      await startVoting();
-
       sendMailVote();
     }
   }

@@ -1,27 +1,15 @@
 import { SuggestionModel } from '../models';
-
-
-function startVoting() {
-  const startDate = new Date();
-
-  return SuggestionModel
-    .updateMany(
-      { 'voting.started': null },
-      { 'voting.started': startDate },
-      { runValidators: true }
-    )
-    .then(() => SuggestionModel.find( { 'voting.started': startDate } ));
-}
+import { getFreshSuggestions } from './suggestions';
 
 function getEndorsedSuggestions(limit = 50) {
   return SuggestionModel
-    .find({ 'voting.condition': 'ENDORSED'})
+    .find({ 'voting.isEndorsed': true})
     .sort('-voting.started')
     .limit(limit);
 }
 
-function reolveSuggestionAsEndorsedAndRejected() {
-  const idsOfPicked = suggestions => {
+function resolveEndorsedInPeriod({ settings, today }) {
+  const endorsedIds = suggestions => {
     let highestVote = 0;
     return suggestions.reduce((picked, s) => {
       if (s.voting.num_of_votes > highestVote) {
@@ -35,17 +23,18 @@ function reolveSuggestionAsEndorsedAndRejected() {
     }, []);
   };
 
-  return SuggestionModel
-    .find({ 'voting.condition': 'LISTED'})
-    .then(listed => {
+  return getFreshSuggestions({ settings, today })
+    .then(fresh => {
       return SuggestionModel
-      .update({ 'voting.condition': 'LISTED' }, { 'voting.condition': 'REJECTED' })
-      .update({ _id: { $in: idsOfPicked(listed) }}, { 'voting.condition': 'ENDORSED' });
+      .update(
+        { _id: { $in: endorsedIds(fresh) }},
+        { 'voting.isEndorsed': true },
+        { runValidators: true, new: true },
+      );
     });
 }
 
 export {
   getEndorsedSuggestions,
-  startVoting,
-  reolveSuggestionAsEndorsedAndRejected,
+  resolveEndorsedInPeriod,
 }

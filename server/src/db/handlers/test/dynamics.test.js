@@ -1,6 +1,6 @@
 import {
   addSuggestion,
-  getListedSuggestions,
+  getFreshSuggestions,
   voteOnSuggestion,
 } from '../suggestions';
 
@@ -19,12 +19,18 @@ describe('handlers.dynamics', () => {
     expect(result.description).to.be.equal(description);
   });
 
-  it('get the current suggestions', async () => {
+  it('get the fresh suggestions', async () => {
+    const today = new Date();
+    const settings = {
+      period_suggest_start_day: today.getDate() - 1,
+    };
+
     await addSuggestion('name1', 'description1');
     await addSuggestion('name2', 'description2');
     await addSuggestion('name3', 'description3');
 
-    const result = await getListedSuggestions();
+    const result = await getFreshSuggestions({ settings, today });
+
     expect(result).to.have.lengthOf(3);
   })
 

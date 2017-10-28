@@ -21,7 +21,7 @@ function calculatePeriodState({ settings, today }) {
 
   const resolvePeriod = () => {
     let dayNum = today.getDate();
-    while(true) {
+    for(;;) {
       const time = times.find(isDayInTime(dayNum));
 
       if (time) {

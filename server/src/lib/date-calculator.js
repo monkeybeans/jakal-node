@@ -44,8 +44,22 @@ function isDateInBetween(start, end, today) {
     return false;
 }
 
+const rewindDateToDay = (currentDate, day) => {
+  const date = new Date(currentDate);
+
+  for(;;) {
+    if (day === date.getDate()) {
+      return date;
+    }
+
+    date.setDate(date.getDate() - 1);
+  }
+}
+
+
 export {
     calcDaysToDay,
     calcDaysFromDay,
     isDateInBetween,
+    rewindDateToDay,
 };

@@ -3,7 +3,7 @@ import connect from '../../models';
 before(() => {
   const BEFORE_DELAY_MS = 20;
   const resolve = res => () => {
-    console.log(`Delayed ${BEFORE_DELAY_MS} for the connection setup...`);
+    console.log(`# delayed ${BEFORE_DELAY_MS}ms for the connection setup...`);
     res();
   }
 
@@ -14,4 +14,11 @@ before(() => {
   });
 });
 
-after(() => connect().close());
+after(() => {
+  connect()
+  .dropDatabase()
+  .then(() => {
+    connect().close();
+    console.log(`# database is closed and dropped`);
+  });
+});

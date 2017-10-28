@@ -1,4 +1,9 @@
-import { calcDaysToDay, calcDaysFromDay, isDateInBetween } from '../date-calculator';
+import {
+  calcDaysToDay,
+  calcDaysFromDay,
+  isDateInBetween,
+  rewindDateToDay,
+} from '../date-calculator';
 
 describe('date-calculator', () => {
   it('Calculate number of days to a future day date', () => {
@@ -41,4 +46,23 @@ describe('date-calculator', () => {
       expect(isBetween).to.be.false();
     });
   });
+
+  it('rewind a date number of days same month', () => {
+    const date = new Date(2111, 6, 20);
+
+    const rewinded = rewindDateToDay(date, 6);
+
+    expect(rewinded.getMonth()).to.be.equal(6);
+    expect(rewinded.getDate()).to.be.equal(6);
+  });
+
+  it('rewind a date number of days previous month', () => {
+    const date = new Date(2111, 6, 20);
+
+    const rewinded = rewindDateToDay(date, 22);
+
+    expect(rewinded.getMonth()).to.be.equal(5);
+    expect(rewinded.getDate()).to.be.equal(22);
+  });
+
 });
