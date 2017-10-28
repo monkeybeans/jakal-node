@@ -21,7 +21,7 @@ const TIME_ZONE = 'Europe/Berlin';
 
 const sendMailSuggest = () =>
   getEmailSendList()
-  .then(sendList => {
+  .then(sendLis() => {
     const mail = new MailSender({
       to: sendList,
       subject: 'Voting has started',

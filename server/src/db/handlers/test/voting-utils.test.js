@@ -1,5 +1,4 @@
-import test from 'ava';
-import connect, { SuggestionModel } from '../../models';
+import { SuggestionModel } from '../../models';
 import {
   getEndorsedSuggestions,
   startVoting,
@@ -9,39 +8,37 @@ import {
   voteOnSuggestion,
 } from '../suggestions';
 
+describe('handlers.votingUtils', () => {
+  afterEach(() => SuggestionModel.remove());
 
-test.before(async () => {
-  await connect();
-});
-
-test.afterEach.always(async () => {
-  await SuggestionModel.remove();
-});
-
-test('Set start voting date for suggestions', async t => {
-  await addSuggestion('name1', 'description1')
+  it('Set start voting date for suggestions', async () => {
+    await addSuggestion('name1', 'description1')
     .then(() => addSuggestion('name2', 'description2'))
     .then(() => startVoting());
 
-  await addSuggestion('nameA', 'descriptionA')
+    await addSuggestion('nameA', 'descriptionA')
     .then(() => addSuggestion('nameB', 'descriptionB'))
-    .then(() => startVoting()
+    .then(() =>
+      startVoting()
       .then(s => {
-        t.is(s.length, 2);
-        t.is(s[1].voting.condition, 'LISTED');
+        expect(s).to.have.lengthOf(2);
+        expect(s[1].voting.condition).to.be.equal('LISTED');
       })
-  );
-});
+    );
+  });
 
-test('Picks out the winner for the latest voting round', async t => {
-  const ss = await addSuggestion('nameA', 'descriptionA')
+  it('Picks out the winner for the latest voting round', async () => {
+    const ss = await addSuggestion('nameA', 'descriptionA')
     .then(() => addSuggestion('nameB', 'descriptionB'))
     .then(() => addSuggestion('name1', 'description1'))
     .then(() => addSuggestion('name2', 'description2'));
 
-  await startVoting()
+    await startVoting()
     .then(() => voteOnSuggestion(ss._id))
     .then(() => reolveSuggestionAsEndorsedAndRejected())
     .then(() => getEndorsedSuggestions())
-    .then(ss => t.is(ss[0].name, 'name2'));
+    .then(ss => {
+      expect(ss[0].name).to.be.equal('name2');
+    });
+  });
 });

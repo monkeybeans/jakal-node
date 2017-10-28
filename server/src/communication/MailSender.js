@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import log from '../lib/logger';
-import { parseArgs, loadSecret, isProduction } from '../lib/arg-utils';
+import { parseArgs, loadSecret, isProduction, isTest } from '../lib/arg-utils';
 
 const argv = parseArgs(process.argv.slice(2));
 const secret = loadSecret(argv.secretPath);
@@ -43,7 +43,7 @@ export default class MailSender {
             log(`Mail sent: <<${this.options.subject}>> <<${info.envelope.to}>>`);
           }
         });
-    } else {
+    } else if (!isTest()) {
       log(`Mail disabled for ${process.env.NODE_ENV}, but would have sent: ${JSON.stringify(this.options, null, 2)}`);
     }
   }

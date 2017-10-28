@@ -1,47 +1,37 @@
-import test from 'ava';
 import {
   addSuggestion,
-  getSuggestions,
+  getListedSuggestions,
   voteOnSuggestion,
 } from '../suggestions';
 
-import connect, { SuggestionModel } from '../../models';
+import { SuggestionModel } from '../../models';
 
-test.before(async () => {
-  await connect();
-});
+describe('handlers.dynamics', () => {
+  afterEach(() => SuggestionModel.remove());
 
-test.afterEach.always(async () => {
-  await SuggestionModel.remove();
-});
+  it('inserts an suggestion', async () => {
+    const name = `apan apansson ${Date.now()}`;
+    const description = 'monkeing aroud in the djungle';
 
-test.before(async () => {
-  await connect();
-});
+    const result = await addSuggestion(name, description);
 
-test('inserts an suggestion', async t => {
-  const name = `apan apansson ${Date.now()}`;
-  const description = 'monkeing aroud in the djungle';
+    expect(result.name).to.be.equal(name);
+    expect(result.description).to.be.equal(description);
+  });
 
-  const result = await addSuggestion(name, description);
+  it('get the current suggestions', async () => {
+    await addSuggestion('name1', 'description1');
+    await addSuggestion('name2', 'description2');
+    await addSuggestion('name3', 'description3');
 
-  t.is(result.name, name);
-  t.is(result.description, description);
-});
+    const result = await getListedSuggestions();
+    expect(result).to.have.lengthOf(3);
+  })
 
-test('get the current suggestions', async t => {
-  await addSuggestion('name1', 'description1');
-  await addSuggestion('name2', 'description2');
-  await addSuggestion('name3', 'description3');
+  it('votes on a suggestion', async () => {
+    const suggestion = await addSuggestion('name1', 'description1');
+    const result = await voteOnSuggestion(suggestion._id);
 
-  const result = await getSuggestions();
-
-  t.is(result.length, 3);
-})
-
-test('votes on a suggestion', async t => {
-  const suggestion = await addSuggestion('name1', 'description1');
-  const result = await voteOnSuggestion(suggestion._id);
-
-  t.is(result.voting.num_of_votes, 1);
+    expect(result.voting.num_of_votes).to.be.equal(1);
+  });
 });

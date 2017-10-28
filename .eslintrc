@@ -3,6 +3,7 @@
   "parser": "babel-eslint",
   "env": {
     "node": true,
+    "mocha": true,
   },
   "parserOptions": {
     "ecmaVersion": 7,
@@ -13,5 +14,8 @@
   },
   "globals": {
     "Promise": true,
+    "assert": true,
+    "should": true,
+    "expect": true,
   },
 }
