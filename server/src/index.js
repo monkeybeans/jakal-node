@@ -26,8 +26,9 @@ function logger(req, res, next) {
 }
 
 function loadApp(req, res, next) {
+  const html = 'banan';
   res.send(
-    ```
+    `
     <!DOCUMENT html>
     <html>
     <head>
@@ -36,7 +37,7 @@ function loadApp(req, res, next) {
       <h1>JAKAL VOTING 2.0!!!</h1>
     </body>
     </html>
-    ```
+    `
   );
 
   next();

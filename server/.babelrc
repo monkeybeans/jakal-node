@@ -1,1 +1,10 @@
-../.babelrc
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "current",
+      }
+    }],
+  ],
+  "plugins": [],
+}
