@@ -25,6 +25,7 @@ function resolveEndorsedInPeriod({ settings, today }) {
 
   return getFreshSuggestions({ settings, today })
     .then(fresh => {
+
       return SuggestionModel
       .update(
         { _id: { $in: endorsedIds(fresh) }},

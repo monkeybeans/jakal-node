@@ -3,12 +3,12 @@ import settings from '../settings';
 import { calculatePeriodState } from '../lib/period-calculator';
 import PeriodType from '../types/PeriodType';
 import {
-  reolveSuggestionAsEndorsedAndRejected } from '../db/handlers/voting-utils';
+  resolveEndorsedInPeriod } from '../db/handlers/voting-utils';
 import log from '../lib/logger';
 import MailSender from '../communication/MailSender';
 import {
   getListedSuggestions,
-  getEndorsedSuggestions } from '../db/handlers/suggestions';
+  getFreshSuggestions } from '../db/handlers/suggestions';
 import { getEmailSendList } from '../db/handlers/users';
 import {
   suggestionBeginHTML,
@@ -48,23 +48,30 @@ const sendMailVote = () => {
 }
 
 const sendMailDisplay = () => {
-  const sendMail = sendList =>
-    getEndorsedSuggestions()
-    .then(endorsed => {
-      const mail = new MailSender({
-        to: sendList,
-        subject: 'Voting is finished',
-        html: votingFinishHTML({ suggestion: endorsed[0] }),
-      });
+  const sendMail = (sendList) => {
+    return getFreshSuggestions({ settings, today: new Date() })
+      .then(fresh => {
+        const freshEndorsed = fresh.filter(s => s.voting.isEndorsed);
 
-      mail.send();
-    });
+        if (freshEndorsed.length <= 1) {
+          const mail = new MailSender({
+            to: sendList,
+            subject: 'Voting is finished',
+            html: votingFinishHTML({ suggestion: freshEndorsed[0] }),
+          });
+
+          mail.send();
+        } else {
+          throw new Error(`More then one endorsed suggestion found: ${freshEndorsed}`);
+        }
+      });
+  }
 
   return getEmailSendList()
   .then(sendMail);
 }
 
-const actUponPeriodChange = async () => {
+const actUponPeriodChange = () => {
   const {
     days_to_next_period,
     elapsed_period_days,
@@ -76,24 +83,28 @@ const actUponPeriodChange = async () => {
   // SUGGEST
   if (period === PeriodType.SUGGEST) {
     if (elapsed_period_days === 0) {
-      sendMailSuggest();
+      sendMailSuggest()
+      .catch(e => log.error(`Could not mail for period ${period}: `, e));
     }
   }
   // VOTE
   else if (period === PeriodType.VOTE) {
     if (elapsed_period_days === 0) {
-      sendMailVote();
+      sendMailVote()
+      .catch(e => log.error(`Could not mail for period ${period}: `, e));
+
     }
   }
   // DISPLAY
   else if (period === PeriodType.DISPLAY) {
     if (elapsed_period_days === 0) {
-      await reolveSuggestionAsEndorsedAndRejected();
+      resolveEndorsedInPeriod({ settings, today: new Date() })
+      .then(sendMailDisplay)
+      .catch(e => log.error(`Could not mail for period ${period}: `, e));
 
-      sendMailDisplay();
     }
   } else {
-    throw Error('Could not descide period');
+    throw new Error('Could not descide period');
   }
 };
 
@@ -101,7 +112,7 @@ const actUponPeriodChangeSchedule = new CronJob({
   cronTime: '00 00 02 * * *',
   onTick: actUponPeriodChange,
   startNow: false,
-  runOnInit: true,
+  runOnInit: false,
   timeZone: TIME_ZONE,
 });
 

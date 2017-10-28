@@ -5,7 +5,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "test": "NODE_ENV=TEST mocha --require ./mocha.setup.js src/**/*.test.js",
-    "start": "NODE_ENV=DEVELOPMENT babel-node ./src/index.js",
+    "start": "NODE_ENV=DEVELOPMENT nodemon --exec babel-node ./src/index.js",
     "build": "NODE_ENV=PRODUCTION babel src --out-dir dist"
   },
   "author": "monkeybean",
@@ -27,6 +27,7 @@
     "chai": "^4.1.2",
     "dirty-chai": "^2.0.1",
     "eslint": "^4.9.0",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "nodemon": "^1.12.1"
   }
 }

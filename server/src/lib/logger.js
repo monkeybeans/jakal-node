@@ -11,10 +11,18 @@ const createPrologue = level => {
   return `#[${time}][${level}] `;
 };
 
-const consoleWrap = level => (...args) => console.log.apply(console, [createPrologue(level), ...args]);
+const FG_RED = "\x1b[31m";
+//const BG_RED = "\x1b[41m";
+const COLOR_RESET = "\x1b[0m";
+
+const consoleWrap = (level, COLOR_START) => (...args) => {
+  const start = COLOR_START || '';
+  const end = COLOR_START ? COLOR_RESET : '';
+  console.log.apply(console, [start, createPrologue(level), ...args, end]);
+}
 
 const logger = consoleWrap('INFO');
 logger.debug = consoleWrap('~ DEBUG ~');
-logger.error = consoleWrap('** ERROR **');
+logger.error = consoleWrap('ERROR', FG_RED);
 
 export default logger;

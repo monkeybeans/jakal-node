@@ -51,12 +51,5 @@ export function voteOnSuggestion(suggestionId) {
         { $inc: { 'voting.num_of_votes': 1 } },
         { new: true },
       );
-    })
-}
-
-export function getEndorsedSuggestions(limit = 50) {
-  return SuggestionModel
-  .find({ 'voting.condition': 'ENDORSED' })
-  .sort('-submitter.time')
-  .limit(limit);
+    });
 }

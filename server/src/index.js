@@ -25,6 +25,23 @@ function logger(req, res, next) {
   next();
 }
 
+function loadApp(req, res, next) {
+  res.send(
+    ```
+    <!DOCUMENT html>
+    <html>
+    <head>
+    </head>
+    <body>
+      <h1>JAKAL VOTING 2.0!!!</h1>
+    </body>
+    </html>
+    ```
+  );
+
+  next();
+}
+
 server
 .use(bodyParser.json())
 .use(logger)
@@ -32,6 +49,7 @@ server
 .use('/api/v1', configRouter)
 .use('/api/v1', dynamicsRouter)
 .use('/api/v1', historyRouter)
+.use('/', loadApp)
 .use(errorHandler);
 
 server.listen(PORT, () => {
