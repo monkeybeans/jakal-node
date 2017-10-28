@@ -31,6 +31,11 @@ export function getListedSuggestions() {
   return SuggestionModel.find({ 'voting.condition': 'LISTED'});
 }
 
+
+export function getLatestVoteRoundSuggestions() {
+  return SuggestionModel.find({});
+}
+
 export function voteOnSuggestion(suggestionId) {
   return SuggestionModel
     .findOne({ _id: suggestionId })

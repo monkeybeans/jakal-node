@@ -13,7 +13,7 @@ function startVoting() {
     .then(() => SuggestionModel.find( { 'voting.started': startDate } ));
 }
 
-function getPickedSuggestions(limit = 50) {
+function getEndorsedSuggestions(limit = 50) {
   return SuggestionModel
     .find({ 'voting.condition': 'ENDORSED'})
     .sort('-voting.started')
@@ -45,7 +45,7 @@ function reolveSuggestionAsEndorsedAndRejected() {
 }
 
 export {
-  getPickedSuggestions,
+  getEndorsedSuggestions,
   startVoting,
   reolveSuggestionAsEndorsedAndRejected,
 }

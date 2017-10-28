@@ -1,7 +1,7 @@
 import test from 'ava';
 import connect, { SuggestionModel } from '../../models';
 import {
-  getPickedSuggestions,
+  getEndorsedSuggestions,
   startVoting,
   reolveSuggestionAsEndorsedAndRejected } from '../voting-utils';
 import {
@@ -42,6 +42,6 @@ test('Picks out the winner for the latest voting round', async t => {
   await startVoting()
     .then(() => voteOnSuggestion(ss._id))
     .then(() => reolveSuggestionAsEndorsedAndRejected())
-    .then(() => getPickedSuggestions())
+    .then(() => getEndorsedSuggestions())
     .then(ss => t.is(ss[0].name, 'name2'));
 });

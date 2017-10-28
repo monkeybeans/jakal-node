@@ -5,18 +5,22 @@
 </head>
 <body>
   <h1>Time to vote on your favourite instrument!</h1>
+  <h2>This month instruments are:</h2>
   <p>
-    This month instruments are:
     <ul>
-      {{#each suggestions}}
-        <li>
-          {{ this.name }}
-        </li>
-      {{/each}}
+      {{#if suggestions}}
+        {{#each suggestions}}
+          <li>{{ this.name }}</li>
+        {{/each}}
+      {{else}}
+        <li>No instruments this month :/</li>
+      {{/if}}
     </ul>
   </p>
   <p>
-    Go to <a href="{{ SITE_URL }}">jakal page</a> and add your vote!
+    {{#if suggestions}}
+      Go to <a href="{{ SITE_URL }}">jakal page</a> and do you voting!
+    {{/if}}
   </p>
 </body>
 </html>

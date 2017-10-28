@@ -31,8 +31,6 @@ const sendMailSuggest = () =>
     mail.send();
   });
 
-
-
 const sendMailVote = () => {
   const sendMail = sendList =>
     getListedSuggestions()
@@ -57,7 +55,7 @@ const sendMailDisplay = () => {
       const mail = new MailSender({
         to: sendList,
         subject: 'Voting is finished',
-        html: votingFinishHTML({ suggestion: endorsed }),
+        html: votingFinishHTML({ suggestion: endorsed[0] }),
       });
 
       mail.send();
@@ -66,9 +64,6 @@ const sendMailDisplay = () => {
   return getEmailSendList()
   .then(sendMail);
 }
-
-
-
 
 const actUponPeriodChange = async () => {
   const {

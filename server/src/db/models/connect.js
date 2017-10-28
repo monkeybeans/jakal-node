@@ -13,9 +13,10 @@ const connect = (/*, username, password */) => {
 
   const getUri = () => {
     if (isTest()) {
-      log('# using test database #');
+      log('Using test database');
       return 'mongodb://localhost/jakal_testing';
     } else if (isDevelopment() || isProduction()) {
+      log('Using production database');
       return 'mongodb://localhost/jakal';
     } else {
       throw new Error(`Unknown environment(${getEnvironment()}), could not descide monogo uri`);

@@ -1,10 +1,13 @@
 import * as express from 'express';
-import { getPickedSuggestions } from '../lib/scheduled/voting-util';
+import { getEndorsedSuggestions } from '../db/handlers/voting-utils';
 
 const router = express.Router();
 
 router.get('/history', (req, res) => {
-  res.json(getPickedSuggestions());
+  getEndorsedSuggestions()
+  .then(endorsed => {
+    res.json(endorsed);
+  });
 });
 
 

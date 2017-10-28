@@ -14,7 +14,7 @@ export default class MailSender {
     this.options = {
       from: from || username,
       to,
-      subject,
+      subject: `[jakal] ${subject}`,
       text,
       html,
     };
@@ -40,7 +40,7 @@ export default class MailSender {
           if (error) {
             log.error(error);
           } else {
-            log(`Mail sent: <<${this.options.subject}>> ${info.envelope}`);
+            log(`Mail sent: <<${this.options.subject}>> <<${info.envelope.to}>>`);
           }
         });
     } else {
