@@ -1,7 +1,12 @@
 html * {
-  font-size: 12rem;
+  font-size: 12px;
+}
 
-  & .banan {
-    background: red;
-  }
+html, body {
+
+}
+
+.root {
+  margin-left: auto;
+  margin-right: auto;
 }

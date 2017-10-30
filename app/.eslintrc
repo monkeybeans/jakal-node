@@ -1,3 +1,17 @@
 {
   "extends": "airbnb",
+  "parser": "babel-eslint",
+  "env": {
+    browser: true,
+  },
+  "rules": {
+    "react/prefer-stateless-function": "off",
+    "import/no-extraneous-dependencies": "warn",
+    "import/no-unresolved": "warn",
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {},
+    },
+  },
 }

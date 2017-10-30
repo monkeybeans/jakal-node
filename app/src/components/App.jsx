@@ -1,20 +1,33 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
-import { Responsive, Segment } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from 'reducers'; //eslint-disable-line
+import Menu from './menu/container';
+import AddSuggestion from './add-suggestion/container';
 import css from './root.style.css';
+
+
+/* eslint-disable no-underscore-dangle */
+const store = createStore(
+  reducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
+/* eslint-enable */
 
 class App extends React.Component {
   render() {
     return (
-      <Segment.Group>
-        <Responsive as={Segment} maxWidth={767}>
-          <div className={ css.banan }>Visible only if display has <code>767px</code> width and lower</div>
-        </Responsive>
-        <Responsive as={Segment} maxWidth={2569}>
-          <div>Visible only if display has <code>2569px</code> width</div>
-          <Button primary>Semantics Button..wiiii</Button>
-        </Responsive>
-      </Segment.Group>
+      <Grid>
+        <Grid.Column mobile={16} tablet={16} computer={12} className={css.root}>
+          <Provider store={store}>
+            <div>
+              <Menu />
+              <AddSuggestion />
+            </div>
+          </Provider>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
