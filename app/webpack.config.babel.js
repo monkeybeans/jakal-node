@@ -8,7 +8,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   entry: {
-    'c_app-jakal': './src/index.js',
+    'c_app': './src/index.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -31,21 +31,27 @@ module.exports = {
         exclude: [/node_modules/],
         use: 'babel-loader',
       },
-      // {
-      //   test: /\.scss$/,
-      //   use: [
-      //     'style-loader',
-      //     'css-loader?importLoaders=1',
-      //     'postcss-loader',
-      //     'sass-loader',
-      //   ],
-      // },
+      {
+        test: /\.css$/,
+        exclude: [/node_modules/],
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]'
+            }
+          },
+          { loader: 'sass-loader' },
+        ]
+      }
     ],
   },
   devtool: '#inline-source-map',
   devServer: {
-    publicPath: '/jakal/dist', // webpack build files serving path
-    contentBase: path.resolve(__dirname, 'src/web'), // static content
+    publicPath: '/assets', // webpack build files serving path
+    contentBase: path.resolve(__dirname, 'web'), // mount dir content to server root path
     watchContentBase: false,
     compress: true,
     port: 9000,

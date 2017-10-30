@@ -8,5 +8,5 @@ import App from './components/App';
 
 ReactDOM.render(
   React.createElement(App),
-  document.getElementById('app'), //eslint-disable-line no-undef
+  document.getElementById('app-root'), //eslint-disable-line no-undef
 );
