@@ -1,5 +1,4 @@
-const makeActionTypes = (types, context) =>
-  types.reduce((at, t) => ({ ...at, [t]: `${context}/${t}` }), {});
+import { makeActionTypes } from './utils';
 
 const at = makeActionTypes([
   'FETCH_DYNAMICS_START',
@@ -16,30 +15,30 @@ function reducer(state = defaultState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case at.FETCH_DYNAMICS_START:
-      return { ...state, suggestions: payload.suggestions };
+    case at.FETCH_DYNAMICS_DONE:
+      return { ...state, ...payload };
     case at.FETCH_DYNAMICS_FAIL:
-      return { ...state, error: payload.err };
+      return { ...state, error: payload.error };
     default:
       return state;
   }
 }
 
-const fetchSuggestions = () => (dispatch, getState, api) => {
+const fetchSuggestions = () => (dispatch, getState, { api }) => {
   dispatch({ type: at.FETCH_DYNAMICS_START });
 
   api
     .get('/api/v1/dynamics/suggestions')
-    .then((payload) => {
+    .then(({ data }) => {
       dispatch({
         type: at.FETCH_DYNAMICS_DONE,
-        payload,
+        payload: { suggestions: data },
       });
     })
     .catch((error) => {
       dispatch({
         type: at.FETCH_DYNAMICS_FAIL,
-        error,
+        payload: error,
       });
     });
 };

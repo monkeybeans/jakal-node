@@ -1,8 +1,36 @@
+:root {
+  --theme-color-brightest: #E09F7D;
+  --theme-color-bright: #EF5D60;
+  --theme-color-neutral: #EC4067;
+  --theme-color-dark: #A01A7D;
+  --theme-color-darkest: #311847;
+}
+
 html * {
   font-size: 12px;
 }
 
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.5rem;
+}
+h4 {
+  font-size: 1.2rem;
+}
+h5 {
+  font-size: 1rem;
+}
+p {
+  font-size: 1rem;
+}
+
 html, body {
+  background-color: var(--theme-color-bright);
 
 }
 

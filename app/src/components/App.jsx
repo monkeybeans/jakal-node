@@ -1,19 +1,24 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import thunk from 'redux-thunk';
+import api from 'axios';
 import reducers from 'reducers'; //eslint-disable-line
 import Menu from './menu/container';
 import AddSuggestion from './add-suggestion/container';
 import css from './root.style.css';
 
-
 /* eslint-disable no-underscore-dangle */
+const applyBrowserDebuggerMiddleware = () =>
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+/* eslint-enable */
+
 const store = createStore(
   reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyBrowserDebuggerMiddleware(),
+  applyMiddleware(thunk.withExtraArgument({ api })),
 );
-/* eslint-enable */
 
 class App extends React.Component {
   render() {

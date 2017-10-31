@@ -11,7 +11,7 @@ const PORT = 8085;
 
 
 function errorHandler(err, req, res, next) {
-  res.json({ error: err.message });
+  res.status(500).json({ error: err.message });
   log.error(err);
   next();
 }

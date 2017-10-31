@@ -1,14 +1,15 @@
 import * as express from 'express';
 import {
-  getSuggestions,
+  getFreshSuggestions,
   addSuggestion,
   voteOnSuggestion,
 } from '../db/handlers/suggestions';
+import settings from '../settings';
 
 const router = express.Router();
 
 router.get('/dynamics/suggestions', (req, res, next) => {
-  getSuggestions()
+  getFreshSuggestions({ settings, today: new Date() })
     .then(data => res.json(data))
     .catch(next);
 });

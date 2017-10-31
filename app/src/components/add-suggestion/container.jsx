@@ -2,20 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import P from 'prop-types';
 import { Button } from 'semantic-ui-react';
-import { fetchSuggestions } from 'reducers/suggestions.reducer'; //eslint-disable-line
+import { fetchSuggestions } from 'reducers/dynamics.reducer'; //eslint-disable-line
 import css from './style.css';
 import SuggestionList from './SuggestionList';
 
 class Container extends React.Component {
   static displayName = 'AddSuggestion';
   static propTypes = {
-    suggestions: P.arrayOf(P.string).isRequired,
+    suggestions: P.arrayOf(P.object).isRequired,
     dispatch: P.func.isRequired,
   }
 
-  onComponentWillMount() {
+  componentWillMount() {
     const { dispatch } = this.props;
-    dispatch(fetchSuggestions);
+    dispatch(fetchSuggestions());
   }
 
   render() {
@@ -30,5 +30,5 @@ class Container extends React.Component {
 
 
 export default connect(state => ({
-  suggestions: state.suggestions.suggestions,
+  suggestions: state.dynamics.suggestions,
 }))(Container);

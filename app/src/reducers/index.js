@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import suggestions from './suggestions.reducer';
+import dynamics from './dynamics.reducer';
+import error from './error.reducer';
 
 export default combineReducers({
-  suggestions,
+  dynamics,
+  error,
 });
