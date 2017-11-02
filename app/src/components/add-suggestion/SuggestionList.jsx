@@ -11,17 +11,18 @@ export default class SuggestionList extends React.Component {
     const { items } = this.props;
 
     return items.map(i => (
-      <Item.Content key={`suggestion-list-.${i._id}`}>
-        <Item.Header>Fill in item later { i.name }</Item.Header>
-        <Item.Description>{ i.description }</Item.Description>
-      </Item.Content>
+      <Item key={`suggestion-list-.${i._id}`}>
+        <Item.Content>
+          <Item.Header>{ i.name }</Item.Header>
+          <Item.Description>{ i.description }</Item.Description>
+        </Item.Content>
+      </Item>
     ));
   }
 
   render() {
     return (
       <Item.Group>
-        <h1>This is the suggestions...</h1>
         { this.renderItems() }
       </Item.Group>
     );

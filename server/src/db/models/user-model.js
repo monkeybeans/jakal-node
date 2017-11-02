@@ -1,8 +1,6 @@
 import { Schema } from 'mongoose';
 import connect from './connect';
 
-const connection = connect();
-
 const schema = new Schema({
   name: {
     type: String,
@@ -13,7 +11,14 @@ const schema = new Schema({
     type: [String],
     required: true,
   },
-  password: String,
+  lasVoting: {
+    type: Date,
+    default: new Date(0)
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
 const UserModel = connect().model('User', schema);

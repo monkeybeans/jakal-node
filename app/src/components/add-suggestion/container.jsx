@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import P from 'prop-types';
-import { Button } from 'semantic-ui-react';
-import { fetchSuggestions } from 'reducers/dynamics.reducer'; //eslint-disable-line
+import { fetchSuggestions, sendSuggestion } from 'reducers/dynamics.reducer'; //eslint-disable-line
 import css from './style.css';
+import AddSuggestion from './AddSuggestion';
 import SuggestionList from './SuggestionList';
 
 class Container extends React.Component {
@@ -18,10 +18,16 @@ class Container extends React.Component {
     dispatch(fetchSuggestions());
   }
 
+  onSendSuggestion = ({ name, description }) => {
+    this.props.dispatch(sendSuggestion({ name, description }));
+  }
+
   render() {
     return (
       <div className={css.root}>
-        <Button primary fluid>+ ADD A SUGGESTION</Button>
+        <AddSuggestion
+          onSend={this.onSendSuggestion}
+        />
         <SuggestionList items={this.props.suggestions} />
       </div>
     );

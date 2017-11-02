@@ -6,7 +6,7 @@
   --theme-color-darkest: #311847;
 }
 
-html * {
+/*html * {
   font-size: 12px;
 }
 
@@ -32,7 +32,7 @@ p {
 html, body {
   background-color: var(--theme-color-bright);
 
-}
+}*/
 
 .root {
   margin-left: auto;

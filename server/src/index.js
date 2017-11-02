@@ -9,10 +9,9 @@ import { getEnvironment } from './lib/arg-utils';
 const server = express();
 const PORT = 8085;
 
-
 function errorHandler(err, req, res, next) {
+  log.error("Error Handler recieved: " + err);
   res.status(500).json({ error: err.message });
-  log.error(err);
   next();
 }
 

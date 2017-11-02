@@ -8,20 +8,22 @@ import settings from '../settings';
 
 const router = express.Router();
 
-router.get('/dynamics/suggestions', (req, res, next) => {
+router.get('/dynamics/suggestions', async (req, res, next) => {
   getFreshSuggestions({ settings, today: new Date() })
-    .then(data => res.json(data))
-    .catch(next);
+  .then(r => res.json(r))
+  .catch(next);
 });
 
-router.post('/dynamics/suggestion/:id/vote', async (req, res) => {
-  const response = await voteOnSuggestion(req.params.id);
-  res.json(response);
+router.post('/dynamics/suggestion', (req, res, next) => {
+  addSuggestion(req.body.name, req.body.description)
+  .then(r => res.json(r))
+  .catch(next);
 });
 
-router.post('/dynamics/suggestion', async (req, res) => {
-  const response = await addSuggestion(req.body.name, req.body.description);
-  res.json(response);
+router.post('/dynamics/suggestion/:id/vote', (req, res, next) => {
+  voteOnSuggestion(req.params.id)
+  .then(r => res.json(r))
+  .catch(next);
 });
 
 export {

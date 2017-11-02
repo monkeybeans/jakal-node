@@ -4,10 +4,12 @@ import connect from './connect';
 const schema = new Schema({
   name: {
     type: String,
+    minLength: 2,
     required: true,
   },
   description: {
     type: String,
+    minLength: 10,
     required: true,
   },
   submitter: {
@@ -37,5 +39,6 @@ const schema = new Schema({
 });
 
 const SuggestionModel = connect().model('Suggestion', schema);
+//SuggestionModel.ensureIndexes();
 
 export default SuggestionModel;
