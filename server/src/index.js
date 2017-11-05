@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import settings from './settings';
 import { dynamicsRouter, historyRouter, configRouter } from './routes';
+import { calculatePeriodState } from './lib/period-calculator';
 import connect from './db/models';
 import { actUponPeriodChangeSchedule } from './scheduled';
 import log from './lib/logger';
@@ -53,8 +55,15 @@ server
 .use(errorHandler);
 
 server.listen(PORT, () => {
+  const {
+    days_to_next_period,
+    elapsed_period_days,
+    period,
+  } = calculatePeriodState({ today: new Date(), settings });
+
   log(`Listening on port ${PORT}!`);
   log(`Running in environment: ${getEnvironment()}`);
+  log(`period: ${period}, elapsed days: ${elapsed_period_days}, next period in days: ${days_to_next_period}`);
 
   connect();
   actUponPeriodChangeSchedule.start();
