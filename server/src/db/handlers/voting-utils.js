@@ -3,7 +3,7 @@ import { getFreshSuggestions } from './suggestions';
 
 function getEndorsedSuggestions(limit = 50) {
   return SuggestionModel
-    .find({ 'voting.isEndorsed': true})
+    .find({ 'voting.is_endorsed': true})
     .sort('-voting.started')
     .limit(limit);
 }
@@ -29,7 +29,7 @@ function resolveEndorsedInPeriod({ settings, today }) {
       return SuggestionModel
       .update(
         { _id: { $in: endorsedIds(fresh) }},
-        { 'voting.isEndorsed': true },
+        { 'voting.is_endorsed': true },
         { runValidators: true, new: true },
       );
     });

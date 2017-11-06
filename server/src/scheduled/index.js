@@ -51,7 +51,7 @@ const sendMailDisplay = () => {
   const sendMail = (sendList) => {
     return getFreshSuggestions({ settings, today: new Date() })
       .then(fresh => {
-        const freshEndorsed = fresh.filter(s => s.voting.isEndorsed);
+        const freshEndorsed = fresh.filter(s => s.voting.is_endorsed);
 
         if (freshEndorsed.length <= 1) {
           const mail = new MailSender({

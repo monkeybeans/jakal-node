@@ -23,7 +23,7 @@ describe('handlers.votingUtils', () => {
     await voteOnSuggestion(ss._id);
 
     return resolveEndorsedInPeriod({ settings, today })
-    .then(() => SuggestionModel.find( { 'voting.isEndorsed': true }))
+    .then(() => SuggestionModel.find( { 'voting.is_endorsed': true }))
     .then(ss => {
       expect(ss).to.have.lengthOf(1);
       expect(ss[0].name).to.be.equal('name2');

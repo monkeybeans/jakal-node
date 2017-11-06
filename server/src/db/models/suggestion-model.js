@@ -27,7 +27,7 @@ const schema = new Schema({
       type: Number,
       default: 0,
     },
-    isEndorsed: {
+    is_endorsed: {
       type: Boolean,
       default: false,
     },
