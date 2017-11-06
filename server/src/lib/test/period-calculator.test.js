@@ -1,5 +1,5 @@
 import { calculatePeriodState } from '../period-calculator';
-import PeriodType from '../../types/PeriodType';
+import PeriodType from '../../../../shared/types/PeriodType';
 
 describe('period-calculator', () => {
   it('Calculationg the config date no overlap', () => {

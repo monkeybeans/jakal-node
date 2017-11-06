@@ -4,4 +4,4 @@ const PeriodType = {
   DISPLAY: 'DISPLAY',
 }
 
-export default PeriodType;
+module.exports = PeriodType;

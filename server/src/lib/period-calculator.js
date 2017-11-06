@@ -1,4 +1,4 @@
-import PeriodType from '../types/PeriodType';
+import PeriodType from '../../../shared/types/PeriodType';
 import {
   calcDaysToDay,
   calcDaysFromDay,

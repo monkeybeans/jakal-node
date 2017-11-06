@@ -5,6 +5,7 @@ import { fetchSuggestions, sendSuggestion, sendSuggestionVote } from 'reducers/d
 import css from './style.css';
 import { AddSuggestion } from './AddSuggestion';
 import { SuggestionList } from './SuggestionList';
+import PeriodType from '../../../../shared/types/PeriodType';
 
 class Container extends React.Component {
   static displayName = 'AddSuggestion';
@@ -25,8 +26,8 @@ class Container extends React.Component {
 
   render() {
     const { config, suggestions, dispatch } = this.props;
-    const hideAddSuggestion = config.period !== 'SUGGEST';
-    const enableVoting = config.period === 'VOTE';
+    const hideAddSuggestion = config.period !== PeriodType.SUGGEST;
+    const enableVoting = config.period === PeriodType.VOTE;
 
     return (
       <div className={css.root}>

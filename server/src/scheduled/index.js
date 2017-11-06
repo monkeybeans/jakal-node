@@ -1,7 +1,7 @@
 import { CronJob } from 'cron';
 import settings from '../settings';
 import { calculatePeriodState } from '../lib/period-calculator';
-import PeriodType from '../types/PeriodType';
+import PeriodType from '../../../shared/types/PeriodType';
 import {
   resolveEndorsedInPeriod } from '../db/handlers/voting-utils';
 import log from '../lib/logger';
