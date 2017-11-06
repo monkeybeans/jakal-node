@@ -55,7 +55,7 @@ export class AddSuggestion extends React.Component {
 
       setTimeout(() => {
         this.reset();
-      }, 2500);
+      }, 1500);
     }
   }
 
@@ -127,9 +127,7 @@ export class AddSuggestion extends React.Component {
   render() {
     const postamble = this.state.showInput ? '' : '+';
 
-    if (this.props.hide === true) {
-      return null;
-    }
+    if (this.props.hide === true) { return null; }
 
     return (
       <div>

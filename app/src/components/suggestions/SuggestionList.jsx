@@ -5,7 +5,7 @@ import { VoteButton } from './VoteButton';
 
 export class SuggestionList extends React.Component {
   renderItems = () => {
-    const { items, sendSuggesionVote } = this.props;
+    const { items, sendSuggesionVote, enableVoting } = this.props;
 
     return items.map(i => (
       <Item key={`suggestion-list-.${i._id}`}>
@@ -15,6 +15,7 @@ export class SuggestionList extends React.Component {
         </Item.Content>
         <Item.Extra>
           <VoteButton
+            hide={!enableVoting}
             suggestionId={i._id}
             onVoteForSuggestion={sendSuggesionVote}
           />
@@ -35,4 +36,5 @@ export class SuggestionList extends React.Component {
 SuggestionList.propTypes = {
   items: P.arrayOf(P.object).isRequired,
   sendSuggesionVote: P.func.isRequired,
+  enableVoting: P.bool.isRequired,
 };

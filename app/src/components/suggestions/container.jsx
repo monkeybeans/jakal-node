@@ -25,16 +25,19 @@ class Container extends React.Component {
 
   render() {
     const { config, suggestions, dispatch } = this.props;
+    const hideAddSuggestion = config.period !== 'SUGGEST';
+    const enableVoting = config.period === 'VOTE';
 
     return (
       <div className={css.root}>
         <AddSuggestion
-          hide={config.period !== 'SUGGEST'}
+          hide={hideAddSuggestion}
           onSend={this.onSendSuggestion}
         />
         <SuggestionList
           items={suggestions}
           sendSuggesionVote={id => dispatch(sendSuggestionVote(id))}
+          enableVoting={enableVoting}
         />
       </div>
     );

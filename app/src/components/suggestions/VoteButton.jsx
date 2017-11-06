@@ -10,6 +10,10 @@ export class VoteButton extends React.Component {
   }
 
   render() {
+    const { hide } = this.props;
+
+    if (hide === true) { return null; }
+
     return (
       <Button onClick={this.handleOnClick} compact size="tiny" positive>
         vote
@@ -21,4 +25,5 @@ export class VoteButton extends React.Component {
 VoteButton.propTypes = {
   suggestionId: P.string.isRequired,
   onVoteForSuggestion: P.func.isRequired,
+  hide: P.bool.isRequired,
 };
