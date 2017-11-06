@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import P from 'prop-types';
-import { fetchSuggestions, sendSuggestion } from 'reducers/dynamics.reducer'; //eslint-disable-line
+import { fetchSuggestions, sendSuggestion, sendSuggestionVote } from 'reducers/dynamics.reducer'; //eslint-disable-line
 import css from './style.css';
-import AddSuggestion from './AddSuggestion';
-import SuggestionList from './SuggestionList';
+import { AddSuggestion } from './AddSuggestion';
+import { SuggestionList } from './SuggestionList';
 
 class Container extends React.Component {
   static displayName = 'AddSuggestion';
   static propTypes = {
     suggestions: P.arrayOf(P.object).isRequired,
+    config: P.object.isRequired,
     dispatch: P.func.isRequired,
   }
 
@@ -23,18 +24,24 @@ class Container extends React.Component {
   }
 
   render() {
+    const { config, suggestions, dispatch } = this.props;
+
     return (
       <div className={css.root}>
         <AddSuggestion
+          hide={config.period !== 'SUGGEST'}
           onSend={this.onSendSuggestion}
         />
-        <SuggestionList items={this.props.suggestions} />
+        <SuggestionList
+          items={suggestions}
+          sendSuggesionVote={id => dispatch(sendSuggestionVote(id))}
+        />
       </div>
     );
   }
 }
 
-
 export default connect(state => ({
   suggestions: state.dynamics.suggestions,
+  config: state.config,
 }))(Container);

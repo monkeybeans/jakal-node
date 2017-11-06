@@ -13,6 +13,7 @@
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
     "react/sort-comp": "off",
+    "react/forbid-prop-types": "warn",
   },
   "settings": {
     "import/resolver": {

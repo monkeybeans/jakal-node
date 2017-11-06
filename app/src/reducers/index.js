@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
+import config from './config.reducer';
 import dynamics from './dynamics.reducer';
 import error from './error.reducer';
 
 export default combineReducers({
+  config,
   dynamics,
   error,
 });

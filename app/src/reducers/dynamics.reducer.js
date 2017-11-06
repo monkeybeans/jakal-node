@@ -8,6 +8,10 @@ const at = makeActionTypes([
   'SEND_SUGGESTION_START',
   'SEND_SUGGESTION_DONE',
   'SEND_SUGGESTION_FAIL',
+
+  'VOTE_ON_SUGGESTION_START',
+  'VOTE_ON_SUGGESTION_DONE',
+  'VOTE_ON_SUGGESTION_FAIL',
 ], 'suggestions');
 
 const defaultState = {
@@ -57,8 +61,22 @@ const sendSuggestion = ({ name, description }) => (dispatch, getState, { api }) 
     .catch(() => dispatch({ type: at.SEND_SUGGESTION_FAIL }));
 };
 
+const sendSuggestionVote = id => (dispatch, getState, { api }) => {
+  dispatch({ type: at.VOTE_ON_SUGGESTION_START });
+
+  api
+    .post(`/api/v1/dynamics/suggestion/${id}/vote`)
+    .then(() => {
+      dispatch({ type: at.VOTE_ON_SUGGESTION_DONE });
+      dispatch(fetchSuggestions());
+    })
+    .catch(() => dispatch({ type: at.VOTE_ON_SUGGESTION_FAIL }));
+};
+
+
 export {
   reducer as default,
   fetchSuggestions,
   sendSuggestion,
+  sendSuggestionVote,
 };

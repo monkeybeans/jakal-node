@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import api from 'axios';
 import reducers from 'reducers'; //eslint-disable-line
 import Menu from './menu/container';
-import AddSuggestion from './add-suggestion/container';
+import Suggestions from './suggestions/container';
 import css from './root.style.css';
 
 /* eslint-disable no-underscore-dangle */
@@ -28,7 +28,7 @@ class App extends React.Component {
           <Provider store={store}>
             <div>
               <Menu />
-              <AddSuggestion />
+              <Suggestions />
             </div>
           </Provider>
         </Grid.Column>

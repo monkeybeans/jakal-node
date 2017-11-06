@@ -1,14 +1,34 @@
 import React from 'react';
-import css from './style.css';
+import P from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchConfig } from 'reducers/config.reducer';
 
-export default class Menu extends React.Component {
+class Menu extends React.Component {
+  displayName: 'Menu';
+  static propTypes = {
+    dispatch: P.func.isRequired,
+    config: P.shape({
+      period: P.string.isRequired,
+      days_to_next_period: P.number.isRequired,
+      elapsed_period_days: P.number.isRequired,
+    }).isRequired,
+  }
+
+  componentWillMount() {
+    this.props.dispatch(fetchConfig());
+  }
+
   render() {
+    const { period, days_to_next_period, elapsed_period_days } = this.props.config;
+
     return (
-      <div className={css.root}>
-        <span>TAB 1</span>
-        <span>TAB 2</span>
-        <span>TAB 3</span>
+      <div>
+        <div>{ `period: ${period}, elapsed: ${elapsed_period_days}, ending in: ${days_to_next_period}`}</div>
       </div>
     );
   }
 }
+
+export default connect(state => ({
+  config: state.config,
+}))(Menu);

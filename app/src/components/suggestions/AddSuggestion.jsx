@@ -18,7 +18,7 @@ const newDescription = () => new FormField({
   validator: isMinLength(10, 'Description must be at least 10 characters long'),
 });
 
-export default class AddSuggestion extends React.Component {
+export class AddSuggestion extends React.Component {
   constructor(props) {
     super(props);
 
@@ -125,9 +125,15 @@ export default class AddSuggestion extends React.Component {
   }
 
   render() {
+    const postamble = this.state.showInput ? '' : '+';
+
+    if (this.props.hide === true) {
+      return null;
+    }
+
     return (
       <div>
-        <Button fluid primary onClick={this.toggleInput}>+ Add a Suggestion</Button>
+        <Button fluid primary onClick={this.toggleInput}>Add a Suggestion {postamble}</Button>
         { this.state.showInput ? this.renderInput() : null }
       </div>
     );
@@ -135,5 +141,6 @@ export default class AddSuggestion extends React.Component {
 }
 
 AddSuggestion.propTypes = {
+  hide: P.bool.isRequired,
   onSend: P.func.isRequired,
 };

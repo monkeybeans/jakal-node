@@ -1,14 +1,11 @@
 import React from 'react';
 import P from 'prop-types';
 import { Item } from 'semantic-ui-react';
+import { VoteButton } from './VoteButton';
 
-export default class SuggestionList extends React.Component {
-  static propTypes = {
-    items: P.arrayOf(P.object).isRequired,
-  }
-
+export class SuggestionList extends React.Component {
   renderItems = () => {
-    const { items } = this.props;
+    const { items, sendSuggesionVote } = this.props;
 
     return items.map(i => (
       <Item key={`suggestion-list-.${i._id}`}>
@@ -16,6 +13,12 @@ export default class SuggestionList extends React.Component {
           <Item.Header>{ i.name }</Item.Header>
           <Item.Description>{ i.description }</Item.Description>
         </Item.Content>
+        <Item.Extra>
+          <VoteButton
+            suggestionId={i._id}
+            onVoteForSuggestion={sendSuggesionVote}
+          />
+        </Item.Extra>
       </Item>
     ));
   }
@@ -28,3 +31,8 @@ export default class SuggestionList extends React.Component {
     );
   }
 }
+
+SuggestionList.propTypes = {
+  items: P.arrayOf(P.object).isRequired,
+  sendSuggesionVote: P.func.isRequired,
+};
