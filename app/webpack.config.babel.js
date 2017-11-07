@@ -8,7 +8,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   entry: {
-    'c_app': './src/index.js',
+    c_app: './src/index.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -40,12 +40,12 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: true,
-              localIdentName: '[path][name]__[local]--[hash:base64:5]'
-            }
+              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+            },
           },
           { loader: 'sass-loader' },
-        ]
-      }
+        ],
+      },
     ],
   },
   devtool: '#inline-source-map',
@@ -58,6 +58,7 @@ module.exports = {
     host: '0.0.0.0',
     proxy: {
       '/api/v1': 'http://localhost:8085',
+      '/login': 'http://localhost:8085',
     },
   },
 };

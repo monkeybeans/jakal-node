@@ -1,11 +1,23 @@
-:root {
+/*:root {
   --theme-color-brightest: #E09F7D;
   --theme-color-bright: #EF5D60;
   --theme-color-neutral: #EC4067;
   --theme-color-dark: #A01A7D;
   --theme-color-darkest: #311847;
+}*/
+
+:root {
+  --theme-color-brightest: #EFF2EF;
+  --theme-color-bright: #EC4067;
+  --theme-color-neutral: #A01A7D;
+  --theme-color-dark: #311847;
+  --theme-color-darkest: #171A21;
 }
 
+body {
+  height: 105vh;
+  background: var(--theme-color-darkest);
+}
 /*html * {
   font-size: 12px;
 }

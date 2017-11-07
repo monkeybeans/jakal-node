@@ -1,3 +1,3 @@
 .root {
-  background: cyan;
+  background: var(--theme-color-brightest);
 }

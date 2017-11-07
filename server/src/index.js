@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import settings from './settings';
-import { dynamicsRouter, historyRouter, configRouter } from './routes';
+import { auth, dynamicsRouter, historyRouter, configRouter } from './routes';
 import { calculatePeriodState } from './lib/period-calculator';
 import connect from './db/models';
 import { actUponPeriodChangeSchedule } from './scheduled';
@@ -21,13 +22,13 @@ function ping(req, res) {
   res.send('pong');
 }
 
-function logger(req, res, next) {
+function accessLog(req, res, next) {
   log(`${req.method} ${req.originalUrl}`);
   next();
 }
 
 function loadApp(req, res, next) {
-  const html = 'banan';
+  //const html = 'banan';
   res.send(
     `
     <!DOCUMENT html>
@@ -46,8 +47,10 @@ function loadApp(req, res, next) {
 
 server
 .use(bodyParser.json())
-.use(logger)
+.use(cookieParser())
+.use(accessLog)
 .get('/ping', ping)
+.use(auth)
 .use('/api/v1', configRouter)
 .use('/api/v1', dynamicsRouter)
 .use('/api/v1', historyRouter)

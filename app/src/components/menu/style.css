@@ -1,5 +1,4 @@
 .root {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  color: var(--theme-color-bright);
+  background: var(--theme-color-dark);
 }
