@@ -1,11 +1,13 @@
 import React from 'react';
 import P from 'prop-types';
-import { Item } from 'semantic-ui-react';
+import { Item, Icon } from 'semantic-ui-react';
 import { VoteButton } from './VoteButton';
 
 export class SuggestionList extends React.Component {
   renderItems = () => {
-    const { items, sendSuggesionVote, enableVoting } = this.props;
+    const {
+      items, sendSuggesionVote, enableVoting, showNumVotes,
+    } = this.props;
 
     return items.map(i => (
       <Item key={`suggestion-list-.${i._id}`}>
@@ -19,6 +21,7 @@ export class SuggestionList extends React.Component {
             suggestionId={i._id}
             onVoteForSuggestion={sendSuggesionVote}
           />
+          { showNumVotes ? <p><Icon circular name="users" color="teal" />{i.voting.num_of_votes}</p> : null }
         </Item.Extra>
       </Item>
     ));
@@ -37,4 +40,5 @@ SuggestionList.propTypes = {
   items: P.arrayOf(P.object).isRequired,
   sendSuggesionVote: P.func.isRequired,
   enableVoting: P.bool.isRequired,
+  showNumVotes: P.bool.isRequired,
 };
