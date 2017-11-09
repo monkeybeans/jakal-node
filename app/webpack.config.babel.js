@@ -59,7 +59,8 @@ module.exports = {
     host: '0.0.0.0',
     proxy: {
       '/api/v1': 'http://localhost:8085',
-      '/login': 'http://localhost:8085',
+      '/authenticate': 'http://localhost:8085',
+      '/register': 'http://localhost:8085',
     },
   },
 };

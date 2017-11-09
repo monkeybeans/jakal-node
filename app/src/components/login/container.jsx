@@ -17,10 +17,12 @@ class Login extends React.Component {
   toggleRegister= () => {
     const { register } = this.state;
 
-    this.setState({ register: !register });
+    this.setState({ register: !register, error: '' });
   }
 
   registerOrLogin = ({ target }) => {
+    const { register } = this.state;
+
     const formFieldsToJson = (form, fields) => {
       const data = new FormData(form);
       return fields.reduce((j, f) => ({ ...j, [f]: data.get(f) }), {});
@@ -31,12 +33,19 @@ class Login extends React.Component {
     this.setState({ sending: true });
 
     const formJson = formFieldsToJson(target, ['username', 'password', 'email']);
+    const url = register ? '/register' : '/authenticate';
     return api
-      .post('/authenticate', formJson)
+      .post(url, formJson)
+      .then(() => {
+        this.setState({
+          sending: false,
+          error: '',
+        });
+      })
       .catch((e) => {
         this.setState({
           sending: false,
-          error: e && e.message,
+          error: e && e.response && e.response.data && e.response.data.error,
         });
       });
   }

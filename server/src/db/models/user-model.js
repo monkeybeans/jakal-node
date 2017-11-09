@@ -2,13 +2,16 @@ import { Schema } from 'mongoose';
 import connect from './connect';
 
 const schema = new Schema({
-  name: {
+  username: {
     type: String,
+    minLength: 2,
+    maxLength: 25,
+    match: new RegExp('^[\\w\\$\\*]{2,}$'),
     unique: true,
     required: true,
   },
   emails: {
-    type: [String],
+    type: [{type:String, required: true}],
     required: true,
   },
   lasVoting: {
@@ -17,8 +20,13 @@ const schema = new Schema({
   },
   password: {
     type: String,
+    minLength: 40,
     required: true,
   },
+  session: {
+    type: String,
+    default: null,
+  }
 });
 
 const UserModel = connect().model('User', schema);

@@ -3,11 +3,12 @@ import { getEndorsedSuggestions } from '../db/handlers/voting-utils';
 
 const router = express.Router();
 
-router.get('/history', (req, res) => {
+router.get('/history', (req, res, next) => {
   getEndorsedSuggestions()
   .then(endorsed => {
     res.json(endorsed);
-  });
+  })
+  .catch(next);
 });
 
 
