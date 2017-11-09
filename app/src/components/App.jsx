@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Grid } from 'semantic-ui-react';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -37,4 +38,7 @@ class App extends React.Component {
   }
 }
 
-export default App;
+ReactDOM.render(
+  React.createElement(App),
+  document.getElementById('app-root'), // eslint-disable-line no-undef
+);

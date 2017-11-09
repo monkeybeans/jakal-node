@@ -8,7 +8,8 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   entry: {
-    c_app: './src/index.js',
+    application: './src/components/App.jsx',
+    authenticate: './src/components/Auth.jsx',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -16,12 +17,12 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'b_vendor',
+      name: 'vendor',
       minChunks: module => module.context && module.context.indexOf('node_modules') !== -1,
     }),
     // keeps the hashes unchanged when changing code in other chunk
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'a_manifest',
+      name: 'manifest',
     }),
   ],
   module: {
