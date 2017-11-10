@@ -1,4 +1,5 @@
 import { makeActionTypes } from './utils';
+import { fetchConfig } from './config.reducer';
 
 const at = makeActionTypes([
   'FETCH_SUGGESTIONS_START',
@@ -69,6 +70,7 @@ const sendSuggestionVote = id => (dispatch, getState, { api }) => {
     .then(() => {
       dispatch({ type: at.VOTE_ON_SUGGESTION_DONE });
       dispatch(fetchSuggestions());
+      dispatch(fetchConfig());
     })
     .catch(() => dispatch({ type: at.VOTE_ON_SUGGESTION_FAIL }));
 };

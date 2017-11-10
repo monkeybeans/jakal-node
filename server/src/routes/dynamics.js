@@ -21,7 +21,9 @@ router.post('/dynamics/suggestion', (req, res, next) => {
 });
 
 router.post('/dynamics/suggestion/:id/vote', (req, res, next) => {
-  voteOnSuggestion(req.params.id)
+  const session = req.cookies.session;
+
+  voteOnSuggestion({ suggestionId: req.params.id, session})
   .then(r => res.json(r))
   .catch(next);
 });

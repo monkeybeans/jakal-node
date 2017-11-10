@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import log from '../../lib/logger';
 import { UserModel } from '../models';
+import settings from '../../settings';
+import { rewindDateToDay } from '../../lib/date-calculator';
 
 const SALT_ROUNDS = 10;
 const flatten = arr => arr.reduce((flat, a) => { return [...flat, ...a]; }, []);
@@ -30,7 +32,7 @@ export function register({ username, email, password }) {
   user.password = passwordHash;
   user.emails = [email];
 
-  return user.save()
+  return user.save({validateBeforeSave: true})
   .catch(e => {
     log.error('Could not create user: ', e);
     throw new Error('Failed to register user');
@@ -47,5 +49,24 @@ export function isSessionValid(session) {
 
 export function touchSession({ username, session }) {
   return UserModel
-  .update({ username}, { session });  
+  .update({ username}, { session });
+}
+
+export function checkIfVotingAllowed(session) {
+  const votingStartDate = rewindDateToDay(new Date(), settings.period_voting_start_day);
+
+  return UserModel
+  .findOne({ session, lastVoting: { $lt: votingStartDate } })
+  .then(eligible => {
+    if (eligible === null) {
+      return false;
+    }
+
+    return true;
+  })
+}
+
+export function updateVotingDate(session) {
+  return UserModel
+  .update({ session }, { lastVoting: new Date()});
 }

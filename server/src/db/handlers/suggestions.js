@@ -1,5 +1,6 @@
 import { SuggestionModel } from '../models';
 import { getEmailSendList } from './users';
+import { checkIfVotingAllowed, updateVotingDate } from './users';
 import MailSender from '../../communication/MailSender';
 import { newSuggestionHTML } from '../../communication/templates'
 import log from '../../lib/logger';
@@ -38,8 +39,17 @@ export function getFreshSuggestions({ settings, today }) {
   return SuggestionModel.find({ 'submitter.time' : { $gt: suggestionStartDate }});
 }
 
-export function voteOnSuggestion(suggestionId) {
-  return SuggestionModel
+export function voteOnSuggestion({suggestionId, session}) {
+  return checkIfVotingAllowed(session)
+  .then(eligible => {
+    if (eligible === true) {
+      return updateVotingDate(session);
+    }
+
+    throw new Error(`Voting is not allowed for session: ${session}`)
+  })
+  .then(() => {
+    return SuggestionModel
     .findOne({ _id: suggestionId })
     .then(suggestion => {
       if (suggestion === null) {
@@ -52,4 +62,5 @@ export function voteOnSuggestion(suggestionId) {
         { new: true },
       );
     });
+  })
 }

@@ -29,6 +29,7 @@ class Container extends React.Component {
     const hideAddSuggestion = config.period !== PeriodType.SUGGEST;
     const enableVoting = config.period === PeriodType.VOTE;
     const showNumVotes = config.period === PeriodType.DISPLAY;
+    const hasVoted = config.userHasVoted === true;
 
     return (
       <div className={css.root}>
@@ -36,6 +37,7 @@ class Container extends React.Component {
           items={suggestions}
           sendSuggesionVote={id => dispatch(sendSuggestionVote(id))}
           enableVoting={enableVoting}
+          hasVoted={hasVoted}
           showNumVotes={showNumVotes}
         />
         <AddSuggestion

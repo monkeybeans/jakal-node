@@ -1,12 +1,12 @@
 import React from 'react';
 import P from 'prop-types';
-import { Item, Icon, Segment, Header, Divider } from 'semantic-ui-react';
+import { Item, Icon, Segment, Header } from 'semantic-ui-react';
 import { VoteButton } from './VoteButton';
 
 export class SuggestionList extends React.Component {
   renderItems = () => {
     const {
-      items, sendSuggesionVote, enableVoting, showNumVotes,
+      items, sendSuggesionVote, enableVoting, showNumVotes, hasVoted,
     } = this.props;
 
     return items.map(i => (
@@ -20,6 +20,7 @@ export class SuggestionList extends React.Component {
               hide={!enableVoting}
               suggestionId={i._id}
               onVoteForSuggestion={sendSuggesionVote}
+              disabled={hasVoted}
             />
             { showNumVotes ? <p><Icon circular name="users" color="teal" />{i.voting.num_of_votes}</p> : null }
           </Item.Extra>
@@ -31,9 +32,11 @@ export class SuggestionList extends React.Component {
   render() {
     const { items } = this.props;
 
+    const numVotes = items.reduce((n, i) => n += i.voting.num_of_votes, 0);
+
     return (
       <Segment>
-        <Header dividing>Suggestions so far - {items.length}</Header>
+        <Header dividing>Suggestions submitted - {items.length} - [people voted: {numVotes}]</Header>
         <Item.Group divided>
           { this.renderItems() }
         </Item.Group>
@@ -46,5 +49,6 @@ SuggestionList.propTypes = {
   items: P.arrayOf(P.object).isRequired,
   sendSuggesionVote: P.func.isRequired,
   enableVoting: P.bool.isRequired,
+  hasVoted: P.bool.isRequired,
   showNumVotes: P.bool.isRequired,
 };

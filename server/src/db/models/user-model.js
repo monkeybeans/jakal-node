@@ -14,7 +14,7 @@ const schema = new Schema({
     type: [{type:String, required: true}],
     required: true,
   },
-  lasVoting: {
+  lastVoting: {
     type: Date,
     default: new Date(0)
   },

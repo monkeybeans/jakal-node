@@ -1,6 +1,7 @@
 import * as express from 'express';
 import settings from '../settings';
 import { calculatePeriodState } from '../lib/period-calculator';
+import { checkIfVotingAllowed } from '../db/handlers/users';
 
 const router = express.Router();
 
@@ -8,11 +9,19 @@ const router = express.Router();
 
 
 
-router.get('/config', (req, res) => {
-  res.json(calculatePeriodState({
+router.get('/config', (req, res, next) => {
+  const session = req.cookies.session;
+
+  const periodData = calculatePeriodState({
     settings,
     today: new Date(),
-  }));
+  });
+
+  checkIfVotingAllowed(session)
+  .then(voteEligible => {
+    res.json(Object.assign({}, periodData, {userHasVoted: !voteEligible}));
+  })
+  .catch(next);
 });
 
 
