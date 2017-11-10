@@ -1,17 +1,9 @@
-/*:root {
-  --theme-color-brightest: #E09F7D;
-  --theme-color-bright: #EF5D60;
-  --theme-color-neutral: #EC4067;
-  --theme-color-dark: #A01A7D;
-  --theme-color-darkest: #311847;
-}*/
-
 :root {
-  --theme-color-brightest: #EFF2EF;
-  --theme-color-bright: #EC4067;
-  --theme-color-neutral: #A01A7D;
-  --theme-color-dark: #311847;
-  --theme-color-darkest: #171A21;
+  --theme-color-brightest: #F0EFF4;
+  --theme-color-bright: #9E829C;
+  --theme-color-neutral: #3A3E3B;
+  --theme-color-dark: #291528;
+  --theme-color-darkest: #000000;
 }
 
 @function radial-bubble($color, $size) {

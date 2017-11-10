@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import P from 'prop-types';
+import { Segment } from 'semantic-ui-react';
 import { fetchEndorsedSuggestions } from 'reducers/history.reducer'; //eslint-disable-line
 import css from './style.css';
 import { EndorsedList } from './EndorsedList';
@@ -22,9 +23,9 @@ class History extends React.Component {
     const { config, endorsed } = this.props;
 
     return (
-      <div className={css.root}>
+      <Segment className={css.root}>
         <EndorsedList items={endorsed} />
-      </div>
+      </Segment>
     );
   }
 }

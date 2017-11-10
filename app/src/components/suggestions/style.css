@@ -1,12 +1,12 @@
 .root {
-  background: var(--theme-color-brightest);
+  /*background: var(--theme-color-brightest);*/
 }
 
 .shade {
   position: relative;
 
   :first-child {
-    background: var(--theme-color-brightest);
+    /*background: var(--theme-color-brightest);*/
     position: relative;
     z-index: 2;
   }
