@@ -1,8 +1,10 @@
 import React from 'react';
 import P from 'prop-types';
 import { connect } from 'react-redux';
+import { Segment } from 'semantic-ui-react';
 import { fetchConfig } from 'reducers/config.reducer';
 import style from './style.css';
+import { PeriodSteps } from './PeriodSteps';
 
 class Menu extends React.Component {
   displayName: 'Menu';
@@ -23,9 +25,13 @@ class Menu extends React.Component {
     const { period, days_to_next_period, elapsed_period_days } = this.props.config;
 
     return (
-      <div className={style.root}>
-        <h3>{ `period: ${period}, elapsed: ${elapsed_period_days}, ending in: ${days_to_next_period}`}</h3>
-      </div>
+      <Segment className={style.root}>
+        <PeriodSteps
+          period={period}
+          daysToNextPeriod={days_to_next_period}
+          elapsedPeriodDays={elapsed_period_days}
+        />
+      </Segment>
     );
   }
 }
