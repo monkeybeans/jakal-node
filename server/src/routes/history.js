@@ -11,7 +11,6 @@ router.get('/history', (req, res, next) => {
   .catch(next);
 });
 
-
 export {
   router as default,
 }

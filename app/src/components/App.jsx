@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Grid } from 'semantic-ui-react';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -8,6 +7,7 @@ import api from 'axios';
 import reducers from 'reducers'; //eslint-disable-line
 import Menu from './menu/container';
 import Suggestions from './suggestions/container';
+import History from './history/container';
 import css from './root.style.css';
 
 /* eslint-disable no-underscore-dangle */
@@ -24,21 +24,22 @@ const store = createStore(
 class App extends React.Component {
   render() {
     return (
-      <Grid>
-        <Grid.Column mobile={16} tablet={16} computer={12} className={css.root}>
-          <Provider store={store}>
-            <div>
-              <Menu />
-              <Suggestions />
-            </div>
-          </Provider>
-        </Grid.Column>
-      </Grid>
+      <div stylename={css.root}>
+        <div className={css.app_header}>
+          <Menu />
+        </div>
+        <div className={css.app_body}>
+          <Suggestions />
+          <History />
+        </div>
+      </div>
     );
   }
 }
 
+const appWithStore = React.createElement(Provider, { store }, React.createElement(App));
+
 ReactDOM.render(
-  React.createElement(App),
+  appWithStore,
   document.getElementById('app-root'), // eslint-disable-line no-undef
 );

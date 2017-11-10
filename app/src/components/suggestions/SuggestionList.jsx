@@ -14,22 +14,22 @@ export class SuggestionList extends React.Component {
         <Item.Content>
           <Item.Header>{ i.name }</Item.Header>
           <Item.Description>{ i.description }</Item.Description>
+          <Item.Extra>
+            <VoteButton
+              hide={!enableVoting}
+              suggestionId={i._id}
+              onVoteForSuggestion={sendSuggesionVote}
+            />
+            { showNumVotes ? <p><Icon circular name="users" color="teal" />{i.voting.num_of_votes}</p> : null }
+          </Item.Extra>
         </Item.Content>
-        <Item.Extra>
-          <VoteButton
-            hide={!enableVoting}
-            suggestionId={i._id}
-            onVoteForSuggestion={sendSuggesionVote}
-          />
-          { showNumVotes ? <p><Icon circular name="users" color="teal" />{i.voting.num_of_votes}</p> : null }
-        </Item.Extra>
       </Item>
     ));
   }
 
   render() {
     return (
-      <Item.Group>
+      <Item.Group divided>
         { this.renderItems() }
       </Item.Group>
     );
