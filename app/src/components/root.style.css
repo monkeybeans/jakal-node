@@ -14,42 +14,36 @@
   --theme-color-darkest: #171A21;
 }
 
-body {
-  height: 105vh;
-  background: var(--theme-color-darkest);
-}
-/*html * {
-  font-size: 12px;
+@function radial-bubble($color, $size) {
+  @return radial-gradient($color $size * 1%, transparent ($size + 1) * 1%);
 }
 
-h1 {
-  font-size: 3rem;
-}
-h2 {
-  font-size: 2rem;
-}
-h3 {
-  font-size: 1.5rem;
-}
-h4 {
-  font-size: 1.2rem;
-}
-h5 {
-  font-size: 1rem;
-}
-p {
-  font-size: 1rem;
-}
 
 html, body {
-  background-color: var(--theme-color-bright);
+  height: 105vh;
+  font-size: 14px;
+  box-sizing: border-box;
+  background:
+    radial-bubble(var(--theme-color-darkest), 50),
+    radial-bubble(var(--theme-color-darkest), 50),
+    var(--theme-color-dark);
+  background-position: 0 0, 20px 20px;
+  background-size:40px 40px;
 
-}*/
-
-.root {
-  margin-left: auto;
-  margin-right: auto;
+  @media only screen and (max-device-width: 1200px) {
+    font-size: 1.8rem;
+  }
 }
 
-.app_header {}
-.app_body {}
+
+*, :after, :before {
+  box-sizing: inherit;
+}
+
+.root {
+  background: var(--theme-color-dark);
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+}

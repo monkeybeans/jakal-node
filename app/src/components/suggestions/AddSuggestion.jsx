@@ -1,8 +1,13 @@
 import React from 'react';
 import P from 'prop-types';
-import { Form, TextArea, Button, Message } from 'semantic-ui-react';
+import {
+  Header,
+  Form,
+  TextArea,
+  Button,
+  Message,
+  Segment } from 'semantic-ui-react';
 import FormField from './FormField';
-
 
 const isMinLength = (length, msg) => (v) => {
   const valid = v && v.length >= length;
@@ -90,10 +95,9 @@ export class AddSuggestion extends React.Component {
     const { name, description, sending } = this.state;
     const error = !!(name.msg || description.msg);
     return (
-      <Form error={error} loading={sending} >
+      <Form error={error} loading={sending}>
         <Form.Input
           name="name"
-          label="Your favourite suggestion goes here"
           type="text"
           value={name.val}
           onChange={this.handleOnChange}
@@ -125,15 +129,15 @@ export class AddSuggestion extends React.Component {
   }
 
   render() {
-    const postamble = this.state.showInput ? '' : '+';
+    const { showInput } = this.state;
 
     if (this.props.hide === true) { return null; }
 
     return (
-      <div>
-        <Button fluid primary onClick={this.toggleInput}>Add a Suggestion {postamble}</Button>
-        { this.state.showInput ? this.renderInput() : null }
-      </div>
+      <Segment>
+        <Header>New suggesiton...add it...</Header>
+        { this.renderInput() }
+      </Segment>
     );
   }
 }

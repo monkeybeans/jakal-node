@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
+import { Container, Grid, Segment } from 'semantic-ui-react';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import api from 'axios';
@@ -24,14 +25,16 @@ const store = createStore(
 class App extends React.Component {
   render() {
     return (
-      <div stylename={css.root}>
-        <div className={css.app_header}>
-          <Menu />
-        </div>
-        <div className={css.app_body}>
-          <Suggestions />
-          <History />
-        </div>
+      <div className={css.root}>
+        <Menu />
+        <Grid>
+          <Grid.Column computer={11} mobile={16}>
+            <Suggestions />
+          </Grid.Column>
+          <Grid.Column computer={5} mobile={16}>
+            <History />
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }

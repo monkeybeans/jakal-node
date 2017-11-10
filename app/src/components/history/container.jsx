@@ -23,7 +23,6 @@ class History extends React.Component {
 
     return (
       <div className={css.root}>
-        <h2>Recent Endorsed Instruments</h2>
         <EndorsedList items={endorsed} />
       </div>
     );

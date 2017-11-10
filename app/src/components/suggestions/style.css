@@ -1,3 +1,24 @@
 .root {
   background: var(--theme-color-brightest);
 }
+
+.shade {
+  position: relative;
+
+  :first-child {
+    background: var(--theme-color-brightest);
+    position: relative;
+    z-index: 2;
+  }
+
+  &::after {
+    content: '';
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 1;
+    position: fixed;
+    opacity: 0.9;
+    top: 0;
+  }
+}

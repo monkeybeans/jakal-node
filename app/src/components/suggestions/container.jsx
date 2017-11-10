@@ -32,15 +32,15 @@ class Container extends React.Component {
 
     return (
       <div className={css.root}>
-        <AddSuggestion
-          hide={hideAddSuggestion}
-          onSend={this.onSendSuggestion}
-        />
         <SuggestionList
           items={suggestions}
           sendSuggesionVote={id => dispatch(sendSuggestionVote(id))}
           enableVoting={enableVoting}
           showNumVotes={showNumVotes}
+        />
+        <AddSuggestion
+          hide={hideAddSuggestion}
+          onSend={this.onSendSuggestion}
         />
       </div>
     );

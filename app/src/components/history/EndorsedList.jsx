@@ -13,7 +13,7 @@ class EndorsedList extends React.Component {
       const day = voteDate.getDay();
 
       return (
-        <Card key={`endorsed-card-${i._id}`}>
+        <Card key={`endorsed-card-${i._id}`} raised>
           <Card.Content>
             <Card.Header>{ i.name }</Card.Header>
             <Card.Meta>{ `${year}, ${day}/${month}` }</Card.Meta>
@@ -26,9 +26,12 @@ class EndorsedList extends React.Component {
 
   render() {
     return (
-      <Card.Group>
-        { this.renderItems() }
-      </Card.Group>
+      <div>
+        <h2>Recent Endorsed Instruments</h2>
+        <Card.Group itemsPerRow={1}>
+          { this.renderItems() }
+        </Card.Group>
+      </div>
     );
   }
 }

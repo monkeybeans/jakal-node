@@ -1,6 +1,6 @@
 import React from 'react';
 import P from 'prop-types';
-import { Item, Icon } from 'semantic-ui-react';
+import { Item, Icon, Segment, Header, Divider } from 'semantic-ui-react';
 import { VoteButton } from './VoteButton';
 
 export class SuggestionList extends React.Component {
@@ -11,6 +11,7 @@ export class SuggestionList extends React.Component {
 
     return items.map(i => (
       <Item key={`suggestion-list-.${i._id}`}>
+        <Icon name="line chart" size="huge" />
         <Item.Content>
           <Item.Header>{ i.name }</Item.Header>
           <Item.Description>{ i.description }</Item.Description>
@@ -28,10 +29,15 @@ export class SuggestionList extends React.Component {
   }
 
   render() {
+    const { items } = this.props;
+
     return (
-      <Item.Group divided>
-        { this.renderItems() }
-      </Item.Group>
+      <Segment>
+        <Header dividing>Suggestions so far - {items.length}</Header>
+        <Item.Group divided>
+          { this.renderItems() }
+        </Item.Group>
+      </Segment>
     );
   }
 }
