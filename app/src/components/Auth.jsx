@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Grid } from 'semantic-ui-react';
 import Login from './login/container';
 import css from './root.style.css';
 
-class App extends React.Component {
+class Auth extends React.Component {
   render() {
     return (
       <Grid>
@@ -16,7 +15,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  React.createElement(App),
-  document.getElementById('authenticate-root'), // eslint-disable-line no-undef
-);
+export default Auth;

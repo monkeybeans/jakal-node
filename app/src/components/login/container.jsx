@@ -37,10 +37,7 @@ class Login extends React.Component {
     return api
       .post(url, formJson)
       .then(() => {
-        this.setState({
-          sending: false,
-          error: '',
-        });
+        window.location.assign('/');
       })
       .catch((e) => {
         this.setState({

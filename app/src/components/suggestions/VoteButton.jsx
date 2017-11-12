@@ -29,8 +29,7 @@ export class VoteButton extends React.Component {
         onClick={this.handleOnClick}
         compact
         positive
-        size="tiny"
-        floated="right"
+        size="small"
         loading={sending}
         disabled={disabled}
       >

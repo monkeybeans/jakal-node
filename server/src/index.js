@@ -1,16 +1,24 @@
+import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import settings from './settings';
-import { auth, dynamicsRouter, historyRouter, configRouter } from './routes';
+import {
+  auth,
+  dynamicsRouter,
+  historyRouter,
+  configRouter,
+  loadAuth, loadApp } from './routes';
 import { calculatePeriodState } from './lib/period-calculator';
 import connect from './db/models';
 import { actUponPeriodChangeSchedule } from './scheduled';
 import log from './lib/logger';
 import { getEnvironment } from './lib/arg-utils';
+import { AUTH_PATH } from './lib/path-constants';
 
 const server = express();
 const PORT = 8085;
+const STATIC_PATH = path.join(__dirname, '../../app/dist');
 
 function errorHandler(err, req, res, next) {
   log.error("Error Handler recieved: " + err);
@@ -27,29 +35,13 @@ function accessLog(req, res, next) {
   next();
 }
 
-function loadApp(req, res, next) {
-  //const html = 'banan';
-  res.send(
-    `
-    <!DOCUMENT html>
-    <html>
-    <head>
-    </head>
-    <body>
-      <h1>JAKAL VOTING 2.0!!!</h1>
-    </body>
-    </html>
-    `
-  );
-
-  next();
-}
-
 server
 .use(bodyParser.json())
 .use(cookieParser())
 .use(accessLog)
 .get('/ping', ping)
+.use('/assets', express.static(STATIC_PATH))
+.get(AUTH_PATH, loadAuth)
 .use(auth)
 .use('/api/v1', configRouter)
 .use('/api/v1', dynamicsRouter)

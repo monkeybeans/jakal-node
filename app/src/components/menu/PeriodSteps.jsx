@@ -43,7 +43,7 @@ class PeriodSteps extends React.Component {
           <Step.Title>{ step.title }</Step.Title>
           <Step.Description>
             { isActive
-              ? `Days elapsed: ${elapsedPeriodDays}, days remaining: ${daysToNextPeriod}`
+              ? (<span><b>{daysToNextPeriod} days left</b> (of total {elapsedPeriodDays + daysToNextPeriod})</span>)
               : ''
             }
           </Step.Description>

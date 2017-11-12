@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --inline --watch",
-    "build": "webpack"
+    "prebuild": "rm -rf ./dist",
+    "build": "NODE_ENV=PRODUCTION webpack -p"
   },
   "author": "",
   "license": "ISC",

@@ -1,7 +1,7 @@
 import uuidv4 from 'uuid/v4';
 import * as express from 'express';
 import * as userHandler from '../db/handlers/users';
-
+import { AUTH_PATH } from '../lib/path-constants';
 const SESSION_LENGTH_MS = 1000 * 60 * 60 * 24 * 31;
 const router = express.Router();
 
@@ -14,8 +14,6 @@ const replyWithSessionCookie = (response, session) => {
     //signed: true,
   })
   .json({ auth: 'passed' });
-
-  return response;
 };
 
 const touchSessionAndReply = ({response, username}) => {
@@ -66,7 +64,9 @@ router
   .isSessionValid(session)
   .then(isValid => {
     if (isValid !== true) {
-      replyInvalidSession(res);
+      /api/.test(req.originalUrl)
+      ? replyInvalidSession(res)
+      : res.redirect(AUTH_PATH);
     } else {
       next();
     }

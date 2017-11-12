@@ -1,30 +1,30 @@
 import path from 'path';
-import webpack from 'webpack';
+// import webpack from 'webpack';
 
-const prodVsDev = (prod, dev) => (process.env.NODE_ENV === 'production' ? prod : dev);
+const prodVsDev = (prod, dev) => (process.env.NODE_ENV === 'PRODUCTION' ? prod : dev);
 
 module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
   entry: {
-    application: './src/components/App.jsx',
-    authenticate: './src/components/Auth.jsx',
+    application: './src/application.js',
+    authenticate: './src/authenticate.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: prodVsDev('[name].[chunkHash].js', '[name].js'),
+    filename: prodVsDev('[name].js', '[name].js'),
   },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: module => module.context && module.context.indexOf('node_modules') !== -1,
-    }),
-    // keeps the hashes unchanged when changing code in other chunk
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-    }),
-  ],
+  // plugins: [
+  //   new webpack.optimize.CommonsChunkPlugin({
+  //     name: 'vendor',
+  //     minChunks: module => module.context && module.context.indexOf('node_modules') !== -1,
+  //   }),
+  //   // keeps the hashes unchanged when changing code in other chunk
+  //   new webpack.optimize.CommonsChunkPlugin({
+  //     name: 'manifest',
+  //   }),
+  // ],
   module: {
     rules: [
       {
@@ -49,7 +49,7 @@ module.exports = {
       },
     ],
   },
-  devtool: '#inline-source-map',
+  devtool: prodVsDev(false, '#inline-source-map'),
   devServer: {
     publicPath: '/assets', // webpack build files serving path
     contentBase: path.resolve(__dirname, 'web'), // mount dir content to server root path
