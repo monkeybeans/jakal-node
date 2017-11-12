@@ -7,6 +7,7 @@
   "scripts": {
     "test": "NODE_ENV=TEST mocha --require ./mocha.setup.js src/**/*.test.js",
     "start": "NODE_ENV=DEVELOPMENT nodemon --exec babel-node ./src/index.js",
+    "prebuild": "rm -rf ./dist",
     "build": "NODE_ENV=PRODUCTION babel src --out-dir dist"
   },
   "author": "monkeybean",

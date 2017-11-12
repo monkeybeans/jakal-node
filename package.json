@@ -1,0 +1,21 @@
+{
+  "name": "jakal-node",
+  "version": "1.0.0",
+  "description": "'no description'",
+  "main": "'./server/dist/index.js'",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build --prefix ./app && npm run build --prefix server",
+    "start": "NODE_ENV=PRODUCTION node server/dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monkeybeans/jakal-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monkeybeans/jakal-node/issues"
+  },
+  "homepage": "https://github.com/monkeybeans/jakal-node#readme"
+}
