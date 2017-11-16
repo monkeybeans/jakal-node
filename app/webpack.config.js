@@ -1,4 +1,4 @@
-import path from 'path';
+const path = require('path');
 // import webpack from 'webpack';
 
 const prodVsDev = (prod, dev) => (process.env.NODE_ENV === 'PRODUCTION' ? prod : dev);
