@@ -17,7 +17,7 @@ import { getEnvironment } from './lib/arg-utils';
 import { AUTH_PATH } from './lib/path-constants';
 
 const server = express();
-const PORT = 8085;
+const PORT = process.env.PORT || 8085;
 const STATIC_PATH = path.join(__dirname, '../../app/dist');
 
 function errorHandler(err, req, res, next) {
