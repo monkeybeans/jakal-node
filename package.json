@@ -5,8 +5,8 @@
   "main": "./server/dist/index.js",
   "scripts": {
     "test": "echo \"All good for now...\" && exit 0",
-    "install": "npm i --prefix ./app || npm i --prefix server",
-    "build": "npm run build --prefix ./app || npm run build --prefix server",
+    "install": "npm i --prefix ./app && npm i --prefix ./server",
+    "build": "npm run build --prefix ./app && npm run build --prefix ./server",
     "start": "NODE_ENV=PRODUCTION node server/dist/index.js"
   },
   "repository": {
