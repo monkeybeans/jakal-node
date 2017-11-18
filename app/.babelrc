@@ -9,7 +9,7 @@
     ["module-resolver", {
       "root": ["./src"],
       "alias": {
-        "reducers": "./reducers",
+        "reducers": "./app/src/reducers",
       }
     }]
   ],

@@ -8,8 +8,8 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   entry: {
-    application: './src/application.js',
-    authenticate: './src/authenticate.js',
+    application: path.resolve(__dirname, './src/application.js'),
+    authenticate: path.resolve(__dirname, './src/authenticate.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
