@@ -36,8 +36,8 @@ const connect = (/*, username, password */) => {
     connection = null;
   });
 
-  connection.on('error', () => {
-    log('MongoDB connection error: ');
+  connection.on('error', (err) => {
+    log.error('MongoDB connection error: ', err);
     connection = null;
   });
 
