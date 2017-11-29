@@ -10,14 +10,15 @@ const connect = (/*, username, password */) => {
   mongoose.Promise = global.Promise || Promise;
   //const query = Object.keys(options).map(k => `k=options[k]`).join(',');
   //mongoose.connect(`mongodb://${username}:${password}@${host}:${port}/${database}?${query}`);
+  const DB_HOST = process.env.DB_HOST || 'localhost';
 
   const getUri = () => {
     if (isTest()) {
       log('Using test database');
-      return 'mongodb://localhost/jakal_testing';
+      return `mongodb://${DB_HOST}/jakal_testing`;
     } else if (isDevelopment() || isProduction()) {
       log('Using production database');
-      return 'mongodb://localhost/jakal';
+      return `mongodb://${DB_HOST}/jakal`;
     } else {
       throw new Error(`Unknown environment(${getEnvironment()}), could not descide monogo uri`);
     }
