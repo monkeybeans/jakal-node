@@ -21,6 +21,7 @@ function calculatePeriodState({ settings, today }) {
 
   const resolvePeriod = () => {
     let dayNum = today.getDate();
+    let guard = 0;
     for(;;) {
       const time = times.find(isDayInTime(dayNum));
 
@@ -29,6 +30,8 @@ function calculatePeriodState({ settings, today }) {
       }
 
       dayNum > 0 ? (dayNum -= 1) : (dayNum += 31);
+
+      if ((guard+=1) > 90) { throw new Error('Could not resolve period'); }
     }
   }
 

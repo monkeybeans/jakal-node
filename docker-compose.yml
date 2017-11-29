@@ -6,7 +6,7 @@
       environment:
         - PORT=8085
         - DB_HOST=mongo-bongo
-        - PERIOD_SUGGEST_START_DAY=9
+        - PERIOD_SUGGEST_START_DAY=25
         - PERIOD_VOTING_START_DAY=10
         - PERIOD_DISPLAY_START_DAY=15
       build: .
