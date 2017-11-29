@@ -9,9 +9,9 @@ ADD . /jakal-exchange
 
 #environment
 #ENV NODE_ENV production
-ENV PORT 8085
-
-ENV DB_HOST mongo-bongo
+# ENV PORT 8085
+#
+# ENV DB_HOST localhost
 
 # Install any needed packages specified in requirements.txt
 #RUN pip install --trusted-host pypi.python.org -r requirements.txt
