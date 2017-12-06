@@ -5,7 +5,8 @@ FROM node:7
 WORKDIR /jakal-exchange
 
 # Copy the current directory contents into the container at /app
-ADD . /jakal-exchange
+ADD package*.json ./
+RUN npm install
 
 #environment
 #ENV NODE_ENV production
@@ -15,9 +16,9 @@ ADD . /jakal-exchange
 
 # Install any needed packages specified in requirements.txt
 #RUN pip install --trusted-host pypi.python.org -r requirements.txt
-RUN npm install
 #RUN npm rebuild node-sass
 #RUN npm rebuild bcrypt
+ADD . ./
 RUN npm run build
 
 # Make port 80 available to the world outside this container
