@@ -4,16 +4,17 @@
   "description": "no description",
   "main": "./server/dist/index.js",
   "scripts": {
+    "preapp:build": "rm -rf ./app/dist",
     "app:test": "echo \"All good for now...\" && exit 0",
     "app:start": "webpack-dev-server --inline --watch --config ./app/webpack.config.babel.js",
-    "preapp:build": "rm -rf ./app/dist",
     "app:build": "NODE_ENV=production webpack -p --config ./app/webpack.config.babel.js",
+    "preserver:build": "rm -rf ./server/dist",
     "server:test": "NODE_ENV=TEST mocha --require ./server/mocha.setup.js ./server/src/**/*.test.js",
     "server:start": "NODE_ENV=development nodemon --exec babel-node ./server/src/index.js",
-    "preserver:build": "rm -rf ./server/dist",
     "server:build": "NODE_ENV=production babel ./server/src --out-dir ./server/dist --source-maps --copy-files",
     "build": "npm run app:build && npm run server:build",
-    "start": "NODE_ENV=production node server/dist/index.js"
+    "trigger:schedule": "node -e 'require(\"./server/dist/scheduled\").actUponPeriodChange()'",
+    "start": "pm2 start ./dist/server/index.js --name jakal-web"
   },
   "repository": {
     "type": "git",
