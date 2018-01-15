@@ -7,13 +7,13 @@
     "app:test": "echo \"All good for now...\" && exit 0",
     "app:start": "webpack-dev-server --inline --watch --config ./app/webpack.config.babel.js",
     "preapp:build": "rm -rf ./app/dist",
-    "app:build": "NODE_ENV=PRODUCTION webpack -p --config ./app/webpack.config.babel.js",
+    "app:build": "NODE_ENV=production webpack -p --config ./app/webpack.config.babel.js",
     "server:test": "NODE_ENV=TEST mocha --require ./server/mocha.setup.js ./server/src/**/*.test.js",
-    "server:start": "NODE_ENV=DEVELOPMENT nodemon --exec babel-node ./server/src/index.js",
+    "server:start": "NODE_ENV=development nodemon --exec babel-node ./server/src/index.js",
     "preserver:build": "rm -rf ./server/dist",
-    "server:build": "NODE_ENV=PRODUCTION babel ./server/src --out-dir ./server/dist",
+    "server:build": "NODE_ENV=production babel ./server/src --out-dir ./server/dist --source-maps --copy-files",
     "build": "npm run app:build && npm run server:build",
-    "start": "NODE_ENV=PRODUCTION node server/dist/index.js"
+    "start": "NODE_ENV=production node server/dist/index.js"
   },
   "repository": {
     "type": "git",
