@@ -3,24 +3,34 @@
   services:
     web:
       container_name: 'jakal-app'
+      build: .
+      networks:
+        - gold-net
+      ports:
+        - 3100:8085
       environment:
+        - NODE_ENV=production
         - PORT=8085
         - DB_HOST=mongo-bongo
         - PERIOD_SUGGEST_START_DAY=25
         - PERIOD_VOTING_START_DAY=10
         - PERIOD_DISPLAY_START_DAY=15
-      build: .
-      ports:
-        - 3100:8085
-      links:
-        - mongo
-      networks:
-        - gold-net
-    mongo:
-      container_name: 'mongo-bongo'
-      image: mongo
-      networks:
-        - gold-net
+        - SECRETS_PATH=/opt/jakal-web/secrets/secret.properties.json
+      volumes:
+        - /opt/jakal-web/secrets:/opt/jakal-web/secrets
+    mongodb:
+        image: mongo:latest
+        container_name: "mongo-bongo"
+        networks:
+          - gold-net
+        # environment:
+        #   - MONGO_DATA_DIR=/data/db
+        #   - MONGO_LOG_DIR=/dev/null
+        volumes:
+          - /data/db:/data/db
+        ports:
+            - 27017:27017
+        # command: mongod --smallfiles --logpath=/dev/null # --quiet
 
   networks:
     gold-net:

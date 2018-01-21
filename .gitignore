@@ -3,3 +3,4 @@ server/dist
 apps/dist/
 deploy.sh
 jakal-web.tar.gz
+docker-compose.dev.yml

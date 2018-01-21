@@ -3,7 +3,7 @@ import log from '../lib/logger';
 import { parseArgs, loadSecret, isProduction, isTest } from '../lib/arg-utils';
 
 const argv = parseArgs(process.argv.slice(2));
-const secret = loadSecret(argv.secretPath);
+const secret = loadSecret(argv.secretsPath || process.env.SECRETS_PATH);
 
 export default class MailSender {
   constructor({ to, subject, text, html, from }) {

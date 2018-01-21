@@ -14,7 +14,7 @@
     "server:build": "NODE_ENV=production babel ./server/src --out-dir ./server/dist --source-maps --copy-files",
     "build": "npm run app:build && npm run server:build",
     "trigger:schedule": "node -e 'require(\"./server/dist/scheduled\").actUponPeriodChange()'",
-    "start": "pm2 start ./dist/server/index.js --name jakal-web"
+    "start": "node ./server/dist/index.js"
   },
   "repository": {
     "type": "git",
