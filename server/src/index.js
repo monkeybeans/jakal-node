@@ -35,7 +35,13 @@ function accessLog(req, res, next) {
   next();
 }
 
+function setHeaders(req, res, next) {
+  res.setHeader( 'X-Powered-By', '** Jakal Web Beta **' );
+  next();
+}
+
 server
+.use(setHeaders)
 .use(bodyParser.json())
 .use(cookieParser())
 .use(accessLog)
