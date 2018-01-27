@@ -3,7 +3,7 @@ import fs from 'fs';
 import pathUtil from 'path';
 import log from '../../lib/logger';
 
-const SITE_URL = 'https://redhat.storage.jakal.com';
+const SITE_URL = process.env.SITE_URL || 'http://localhost';
 
 const loadSource = path => {
   try {
