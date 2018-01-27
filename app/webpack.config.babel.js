@@ -3,7 +3,7 @@ import path from 'path';
 
 const prodVsDev = (prod, dev) => (process.env.NODE_ENV === 'production' ? prod : dev);
 
-module.exports = {
+const config = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
@@ -67,3 +67,5 @@ module.exports = {
     },
   },
 };
+
+module.exports = config;

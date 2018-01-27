@@ -24,8 +24,14 @@ class Login extends React.Component {
     const { register } = this.state;
 
     const formFieldsToJson = (form, fields) => {
-      const data = new FormData(form);
-      return fields.reduce((j, f) => ({ ...j, [f]: data.get(f) }), {});
+      const inputs = Array
+        .from(form.querySelectorAll('input'))
+        .filter(i => fields.includes(i.name));
+
+      return inputs.reduce((j, f) => ({
+        ...j,
+        [f.name]: f.value,
+      }), {});
     };
 
     if (!target.checkValidity()) { return Promise.reject(); }
@@ -55,7 +61,7 @@ class Login extends React.Component {
         <Modal.Header>Login or Register</Modal.Header>
         <Modal.Content>
           <Form onSubmit={this.registerOrLogin} error={!!error} loading={sending}>
-            <Form.Input type="text" placeholder="Pick a username" required minLength="4" name="username" />
+            <Form.Input type="text" placeholder="Pick a username" required minLength="4" name="username" autoFocus />
             <Form.Input type="password" placeholder="Type a password" required minLength="6" name="password" />
             { register
               ? <Form.Input type="email" placeholder="Your email goes here" required name="email" />
@@ -80,7 +86,7 @@ class Login extends React.Component {
             onClick={this.toggleRegister}
             fluid
             content={register ? 'Abort registration' : 'Register'}
-            color="grey"
+            color="blue"
           />
         </Modal.Content>
       </Modal>
