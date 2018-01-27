@@ -51,16 +51,19 @@ module.exports = {
   },
   devtool: prodVsDev(false, '#inline-source-map'),
   devServer: {
-    publicPath: '/assets', // webpack build files serving path
-    contentBase: path.resolve(__dirname, 'web'), // mount dir content to server root path
+    publicPath: '/jakal-web-BETA/assets', // webpack build files serving path
+    // contentBase: path.resolve(__dirname, 'web'), // mount dir content to server root path
     watchContentBase: false,
     compress: true,
-    port: 9000,
-    host: '0.0.0.0',
+    port: 3000,
+    host: 'localhost',
     proxy: {
-      '/jakal-web-BETA//jakal-web-BETA/api/v1': 'http://localhost:8085',
-      '/jakal-web-BETA/authenticate': 'http://localhost:8085',
-      '/jakal-web-BETA/register': 'http://localhost:8085',
+      '/jakal-web-BETA': {
+        target: 'http://localhost:8085',
+        pathRewrite: {
+          '/jakal-web-BETA': '/',
+        },
+      },
     },
   },
 };

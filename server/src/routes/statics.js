@@ -18,6 +18,7 @@ function loadAuth(req, res) {
   // const doc = stringFromPath('../../../app/web/auth.html')
   //   .replace(MOUNT_POINT, html);
 
+  res.setHeader( 'Content-Type', 'text/html; charset=utf-8' );
   res.send(doc);
 }
 
@@ -29,6 +30,7 @@ function loadApp(req, res) {
   //   .replace(MOUNT_POINT, html);
 
   //res.send(doc);
+  res.setHeader( 'Content-Type', 'text/html; charset=utf-8' );
   res.send(doc);
 }
 
