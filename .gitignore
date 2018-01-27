@@ -1,6 +1,6 @@
 node_modules
 server/dist
-apps/dist/
+app/dist/
 deploy.sh
 jakal-web.tar.gz
 docker-compose.dev.yml

@@ -58,9 +58,9 @@ module.exports = {
     port: 9000,
     host: '0.0.0.0',
     proxy: {
-      '/api/v1': 'http://localhost:8085',
-      '/authenticate': 'http://localhost:8085',
-      '/register': 'http://localhost:8085',
+      '/jakal-web-BETA//jakal-web-BETA/api/v1': 'http://localhost:8085',
+      '/jakal-web-BETA/authenticate': 'http://localhost:8085',
+      '/jakal-web-BETA/register': 'http://localhost:8085',
     },
   },
 };

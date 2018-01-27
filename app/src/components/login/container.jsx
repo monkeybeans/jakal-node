@@ -33,11 +33,11 @@ class Login extends React.Component {
     this.setState({ sending: true });
 
     const formJson = formFieldsToJson(target, ['username', 'password', 'email']);
-    const url = register ? '/register' : '/authenticate';
+    const url = register ? 'register' : 'authenticate';
     return api
-      .post(url, formJson)
+      .post(`/jakal-web-BETA/${url}`, formJson)
       .then(() => {
-        window.location.assign('/');
+        window.location.assign('/jakal-web-BETA');
       })
       .catch((e) => {
         this.setState({

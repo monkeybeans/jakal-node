@@ -25,7 +25,7 @@ const fetchEndorsedSuggestions = () => (dispatch, getState, { api }) => {
   dispatch({ type: at.FETCH_HISTORY_START });
 
   api
-    .get('/api/v1/history')
+    .get('/jakal-web-BETA/api/v1/history')
     .then(({ data }) => {
       dispatch({
         type: at.FETCH_HISTORY_DONE,

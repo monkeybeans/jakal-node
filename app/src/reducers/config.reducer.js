@@ -27,7 +27,7 @@ const fetchConfig = () => (dispatch, getState, { api }) => {
   dispatch({ type: at.FETCH_CONFIG_START });
 
   api
-    .get('/api/v1/config')
+    .get('/jakal-web-BETA/api/v1/config')
     .then(({ data }) => {
       dispatch({
         type: at.FETCH_CONFIG_DONE,
