@@ -1,5 +1,5 @@
 import { CronJob } from 'cron';
-import actUponPeriodChange from './jobs';
+import { actUponPeriodChange } from './jobs';
 const TIME_ZONE = 'Europe/Berlin';
 
 const actUponPeriodChangeSchedule = new CronJob({
