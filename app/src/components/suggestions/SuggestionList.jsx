@@ -33,10 +33,11 @@ export class SuggestionList extends React.Component {
     const { items } = this.props;
 
     const numVotes = items.reduce((n, i) => n += i.voting.num_of_votes, 0);
+    const peopleVoted = numVotes ? 'people voted: {numVotes}' : '';
 
     return (
       <Segment>
-        <Header dividing>Suggestions submitted - {items.length} - [people voted: {numVotes}]</Header>
+        <Header dividing>Suggestions submitted - {items.length} - [{ peopleVoted }]</Header>
         <Item.Group divided>
           { this.renderItems() }
         </Item.Group>

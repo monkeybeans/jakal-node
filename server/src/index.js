@@ -64,6 +64,7 @@ server.listen(PORT, () => {
 
   log(`Listening on port ${PORT}!`);
   log(`Running in environment: ${getEnvironment()}`);
+  log(`Entry point is: /jakal-web-BETA${AUTH_PATH}`);
   log(`period: ${period}, elapsed days: ${elapsed_period_days}, next period in days: ${days_to_next_period}`);
 
   connect();
