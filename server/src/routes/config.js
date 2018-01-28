@@ -1,7 +1,7 @@
 import * as express from 'express';
 import settings from '../settings';
 import { calculatePeriodState } from '../lib/period-calculator';
-import { checkIfVotingAllowed } from '../db/handlers/users';
+import { checkIfVotingAllowed, getPublicUserData } from '../db/handlers/users';
 
 const router = express.Router();
 
@@ -17,10 +17,13 @@ router.get('/config', (req, res, next) => {
     today: new Date(),
   });
 
-  checkIfVotingAllowed(session)
-  .then(voteEligible => {
-    res.json(Object.assign({}, periodData, {userHasVoted: !voteEligible}));
-  })
+  const payload = Object.assign({}, periodData);
+
+  getPublicUserData(session)
+  .then(user => Object.assign(payload, { user }))
+  .then(() => checkIfVotingAllowed(session))
+  .then(voteEligible => Object.assign(payload, {userHasVoted: !voteEligible}))
+  .then( payload => res.json(payload))
   .catch(next);
 });
 

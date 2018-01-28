@@ -7,6 +7,7 @@ const at = makeActionTypes([
 ], 'config');
 
 const defaultState = {
+  user: {},
   period: '',
   days_to_next_period: -1,
   elapsed_period_days: -1,

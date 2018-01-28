@@ -58,6 +58,11 @@ router
   .then(() => touchSessionAndReply({ username, response: res}))
   .catch(next);
 })
+.get('/logout', (req, res) => {
+  res
+  .clearCookie('session')
+  .json({ logout: true });
+})
 .use((req, res, next) => {
   const session = req.cookies.session;
 

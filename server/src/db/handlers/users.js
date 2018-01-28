@@ -18,6 +18,16 @@ export function getUser({ username, password }) {
   });
 }
 
+export function getPublicUserData(session) {
+  return UserModel
+    .findOne(
+      { session },
+      { username: 1, lastVoting: 1, _id: 0 },
+      { lean: 1},
+    )
+    .then(user => user || {});
+}
+
 export function getEmailSendList() {
   return UserModel
     .find({}, { emails: 1 })

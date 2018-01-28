@@ -4,6 +4,7 @@ import {
   register,
   isSessionValid,
   touchSession,
+  getPublicUserData,
 } from '../users';
 
 import { UserModel } from '../../models';
@@ -46,6 +47,26 @@ describe('handlers.users', () => {
     expect(result.password.length).to.be.equal(60);
     expect(result.password).not.to.be.equal('123456');
     expect(result.emails).to.be.eql(['banan@test.com']);
+  });
+
+  it('returns the public user data', async () => {
+    const session = 'abcdef-123';
+    const username = 'existing_user';
+    await register({
+      username,
+      password: '123456',
+      email: 'banan@test.com',
+    });
+
+    await touchSession({
+      username,
+      session,
+    });
+
+    return getPublicUserData(session)
+    .then(data => {
+      expect(Object.keys(data)).to.have.members(['username', 'lastVoting']);
+    });
   });
 
   it('updates the session', async () => {
