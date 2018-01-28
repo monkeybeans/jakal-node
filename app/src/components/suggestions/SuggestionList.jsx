@@ -32,12 +32,19 @@ export class SuggestionList extends React.Component {
   render() {
     const { items } = this.props;
 
+    if (items.length === 0) { return null; }
+
     const numVotes = items.reduce((n, i) => n += i.voting.num_of_votes, 0);
     const peopleVoted = numVotes ? 'people voted: {numVotes}' : '';
 
+    const headerTexts = [
+      `Suggestions submitted: ${items.length}`,
+      peopleVoted,
+    ].filter(Boolean);
+
     return (
       <Segment>
-        <Header dividing>Suggestions submitted - {items.length} - [{ peopleVoted }]</Header>
+        <Header dividing>{ headerTexts.join(' - ') }</Header>
         <Item.Group divided>
           { this.renderItems() }
         </Item.Group>
