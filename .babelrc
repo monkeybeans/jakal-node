@@ -1,0 +1,25 @@
+{
+  "env": {
+    "browser": {
+      "presets": [
+        ["env", { "targets": { "browsers": ["last 2 versions", "safari >= 7"] } }],
+        "react",
+      ],
+      "plugins": [
+        "transform-class-properties",
+        "transform-object-rest-spread",
+      ],
+    },
+    "server": {
+      "presets": [
+        ["env", { "targets": { "node": "current" }}],
+        "react",
+      ],
+      "plugins": [
+        "transform-class-properties",
+        "transform-object-rest-spread",
+        [ "react-css-modules", { "removeImport": true, "exclude": "node_modules" }],
+      ]
+    },
+  }
+}
