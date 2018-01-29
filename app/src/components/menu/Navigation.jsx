@@ -2,20 +2,21 @@ import React from 'react';
 import P from 'prop-types';
 import { Menu } from 'semantic-ui-react';
 
-export class UserInfo extends React.Component {
+export class Navigation extends React.Component {
   render() {
     const { user } = this.props;
 
     return (
-      <Menu secondary>
+      <Menu secondary >
         <Menu.Item name="Overview And Actions" active />
+        <Menu.Item name="Statistics (in progress)" />
         <Menu.Item name={`Logout ${user.username}`} onClick={this.props.handleLogout} position="right" />
       </Menu>
     );
   }
 }
 
-UserInfo.propTypes = {
+Navigation.propTypes = {
   handleLogout: P.func.isRequired,
   user: P.object.isRequired,
 };

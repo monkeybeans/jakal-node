@@ -6,7 +6,7 @@ import { Segment } from 'semantic-ui-react';
 import { fetchConfig } from 'reducers/config.reducer';
 import style from './style.css';
 import { PeriodSteps } from './PeriodSteps';
-import { UserInfo } from './UserInfo';
+import { Navigation } from './Navigation';
 
 class Menu extends React.Component {
   displayName: 'Menu';
@@ -40,7 +40,7 @@ class Menu extends React.Component {
 
     return (
       <Segment className={style.root}>
-        <UserInfo handleLogout={this.handleLogout} user={user} />
+        <Navigation handleLogout={this.handleLogout} user={user} />
         <PeriodSteps
           period={period}
           daysToNextPeriod={days_to_next_period}
