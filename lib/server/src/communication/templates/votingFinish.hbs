@@ -6,8 +6,12 @@
 <body>
   <h1>An instrument has been endorsed!</h1>
   <p>
+    {{#if suggestion}}
     The choosen instrument this month was <b>{{ suggestion.name }}</b>,</br>
-    and it got {{ suggestion.voting.num_of_votes }} votes.
+    and it got {{ suggestion.voting.num_of_votes }} vote(s).
+    {{else}}
+    No suggestion could be choosen...:(
+    {{/if}}
   </p>
   <p>
     Go to <a href="{{ SITE_URL }}">jakal page</a> and see the other</br>

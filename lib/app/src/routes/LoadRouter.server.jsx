@@ -7,22 +7,24 @@ import { createStore, applyMiddleware } from 'redux';
 import Page from './Page';
 import reducers from '../reducers';
 
-const preloadedState = {};
-const store = createStore(
-  reducers,
-  preloadedState,
-  applyMiddleware(thunk.withExtraArgument({ api })),
-);
 
-export default function Router(props) {
-  return (
+export default function LoadRouter(preloadedState) {
+  const store = createStore(
+    reducers,
+    preloadedState,
+    applyMiddleware(thunk.withExtraArgument({ api })),
+  );
+
+  const Router = props => (
     <StaticRouter location={props.location} context={props.context}>
       <Page store={store} />
     </StaticRouter>
   );
-}
 
-Router.propTypes = {
-  location: P.string.isRequired,
-  context: P.object.isRequired,
-};
+  Router.propTypes = {
+    location: P.string.isRequired,
+    context: P.object.isRequired,
+  };
+
+  return Router;
+}

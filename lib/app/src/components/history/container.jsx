@@ -13,7 +13,7 @@ class History extends React.Component {
     dispatch: P.func.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { dispatch } = this.props;
 
     dispatch(fetchEndorsedSuggestions());

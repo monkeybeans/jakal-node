@@ -10,12 +10,13 @@ class EndorsedList extends React.Component {
       const voteDate = new Date(i.submitter.time);
       const year = voteDate.getFullYear();
       const month = voteDate.getMonth() + 1;
-      const day = voteDate.getDay();
+      const day = voteDate.getDate();
 
       return (
         <Card key={`endorsed-card-${i._id}`} raised>
           <Card.Content>
             <Card.Header>{ i.name }</Card.Header>
+            <Card.Meta>by { i.submitter.username }</Card.Meta>
             <Card.Meta>{ `${year}, ${day}/${month}` }</Card.Meta>
             <Icon name="users" color="orange" />{i.voting.num_of_votes}
           </Card.Content>

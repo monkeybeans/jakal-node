@@ -15,7 +15,7 @@ class Container extends React.Component {
     dispatch: P.func.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { dispatch } = this.props;
     dispatch(fetchSuggestions());
   }

@@ -12,15 +12,19 @@
     "build:app": "BABEL_ENV=browser webpack --config ./lib/app/webpack.config.babel.js",
     "build:server": "BABEL_ENV=server babel ./lib --out-dir ./dist --soure-map --copy-files",
     "//": "",
+    "//": "======= TOOLS =======",
+    "do:triggerschedule": "node -e 'require(\"./dist/server/src/scheduled\").actUponPeriodChange()'",
+    "//": "",
     "//": "======= DEVELOPMENT =======",
     "dev:build": "NODE_ENV=development npm run build:app -- -w & NODE_ENV=development npm run build:server -- -w",
     "dev:start": "NODE_ENV=development nodemon ./dist/server/src/index.js",
+    "dev:triggerschedule": "NODE_ENV=development npm run do:triggerschedule",
     "//": "",
     "//": "======= PRODUCTION =======",
     "prebuild": "/bin/rm -rf ./dist",
     "build": "NODE_ENV=production npm run build:app && npm run build:server",
     "start": "echo 'Start with you favourite [node|pm2|...]' $npm_package_main",
-    "trigger:schedule": "node -e 'require(\"./server/dist/scheduled\").actUponPeriodChange()'"
+    "triggerschedule": "NODE_ENV=production npm run do:triggerschedule"
   },
   "repository": {
     "type": "git",

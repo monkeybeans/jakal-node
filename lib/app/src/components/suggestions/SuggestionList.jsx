@@ -13,12 +13,12 @@ export class SuggestionList extends React.Component {
       <Item key={`suggestion-list-.${i._id}`}>
         <Icon name="line chart" size="huge" />
         <Item.Content>
-          <Item.Header>{ i.name }</Item.Header>
+          <Item.Header>{ i.name }<i>{showNumVotes ? ` by ${i.submitter.username}` : ''}</i></Item.Header>
           <Item.Description>{ i.description }</Item.Description>
           <Item.Extra>
             <VoteButton
               hide={!enableVoting}
-              suggestionId={i._id}
+              suggestionId={i._id.toString()}
               onVoteForSuggestion={sendSuggesionVote}
               disabled={hasVoted}
             />

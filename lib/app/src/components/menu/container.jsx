@@ -27,7 +27,7 @@ class Menu extends React.Component {
       .catch(e => console.error(e));
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchConfig());
   }
 
