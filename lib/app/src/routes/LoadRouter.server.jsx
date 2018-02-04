@@ -1,18 +1,14 @@
 import React from 'react';
 import P from 'prop-types';
 import { StaticRouter } from 'react-router-dom';
-import thunk from 'redux-thunk';
-import api from 'axios';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore } from 'redux';
 import Page from './Page';
 import reducers from '../reducers';
-
 
 export default function LoadRouter(preloadedState) {
   const store = createStore(
     reducers,
     preloadedState,
-    applyMiddleware(thunk.withExtraArgument({ api })),
   );
 
   const Router = props => (
@@ -26,5 +22,8 @@ export default function LoadRouter(preloadedState) {
     context: P.object.isRequired,
   };
 
-  return Router;
+  return {
+    getRouter: () => Router,
+    getFinalState: () => store.getState(),
+  };
 }

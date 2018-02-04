@@ -2,7 +2,7 @@
 
 ## local
 ```
-npm Install
+npm install
 npm run build
 npm start
 ```
@@ -11,3 +11,10 @@ npm start
 ```
 docker-compose up
 ```
+
+
+## TODO
+* update FE tests
+* update BE tests
+* Statistics view
+* Fix glitch in server side rendering

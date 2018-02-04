@@ -6,11 +6,15 @@ export class Navigation extends React.Component {
   render() {
     const { user } = this.props;
 
+    // <Menu.Item name={'Statistics in progress'} />
     return (
       <Menu secondary >
         <Menu.Item name="Overview And Actions" active />
-        <Menu.Item name="Statistics (in progress)" />
-        <Menu.Item name={`Logout ${user.username}`} onClick={this.props.handleLogout} position="right" />
+        <Menu.Item
+          name={`Logout ${user.username}`}
+          onClick={this.props.handleLogout}
+          position="right"
+        />
       </Menu>
     );
   }
