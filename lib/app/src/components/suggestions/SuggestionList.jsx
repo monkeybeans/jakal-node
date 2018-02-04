@@ -11,7 +11,7 @@ export class SuggestionList extends React.Component {
 
     return items.map(i => (
       <Item key={`suggestion-list-.${i._id}`}>
-        <Icon name="line chart" size="huge" />
+        <Icon name="line chart" size="huge" color={i.voting.is_endorsed ? 'teal' : ''} />
         <Item.Content>
           <Item.Header>{ i.name }<i>{showNumVotes ? ` by ${i.submitter.username}` : ''}</i></Item.Header>
           <Item.Description>{ i.description }</Item.Description>
@@ -35,7 +35,7 @@ export class SuggestionList extends React.Component {
     if (items.length === 0) { return null; }
 
     const numVotes = items.reduce((n, i) => n += i.voting.num_of_votes, 0);
-    const peopleVoted = numVotes ? 'people voted: {numVotes}' : '';
+    const peopleVoted = numVotes ? `people voted: ${numVotes}` : '';
 
     const headerTexts = [
       `Suggestions submitted: ${items.length}`,
