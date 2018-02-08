@@ -10,6 +10,7 @@ export class Navigation extends React.Component {
     return (
       <Menu secondary >
         <Menu.Item name="Overview And Actions" active />
+        <Menu.Item name="BETA THIS IS STILL A BETA" />
         <Menu.Item
           name={`Logout ${user.username}`}
           onClick={this.props.handleLogout}
