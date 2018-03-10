@@ -12,14 +12,14 @@ import ErrorNotFound from './views/ErrorNotFound';
 const App = props => (
   <Provider store={props.store}>
     <Switch>
-      <Route exact path="/jakal-web-BETA/" component={Collaboration} />
-      <Route exact path="//jakal-web-BETA/" component={Collaboration} />
+      <Route exact path="/jakal/" component={Collaboration} />
+      <Route exact path="//jakal/" component={Collaboration} />
 
-      <Route exact path="/jakal-web-BETA/stats" component={Statistics} />
-      <Route exact path="//jakal-web-BETA/stats" component={Statistics} />
+      <Route exact path="/jakal/stats" component={Statistics} />
+      <Route exact path="//jakal/stats" component={Statistics} />
 
-      <Route exact path="/jakal-web-BETA/auth" component={Identify} />
-      <Route exact path="//jakal-web-BETA/auth" component={Identify} />
+      <Route exact path="/jakal/auth" component={Identify} />
+      <Route exact path="//jakal/auth" component={Identify} />
       <Route component={ErrorNotFound} />
     </Switch>
   </Provider>

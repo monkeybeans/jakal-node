@@ -41,9 +41,9 @@ class Login extends React.Component {
     const formJson = formFieldsToJson(target, ['username', 'password', 'email']);
     const url = register ? 'register' : 'authenticate';
     return api
-      .post(`/jakal-web-BETA/${url}`, formJson)
+      .post(`/jakal/${url}`, formJson)
       .then(() => {
-        window.location.assign('/jakal-web-BETA');
+        window.location.assign('/jakal');
       })
       .catch((e) => {
         this.setState({
