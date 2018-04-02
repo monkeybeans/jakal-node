@@ -39,9 +39,10 @@ class Login extends React.Component {
     this.setState({ sending: true });
 
     const formJson = formFieldsToJson(target, ['username', 'password', 'email']);
-    const url = register ? 'register' : 'authenticate';
+    const path = register ? 'register' : 'authenticate';
+    const url = `/jakal/${path}`;
     return api
-      .post(`/jakal/${url}`, formJson)
+      .post(url, formJson)
       .then(() => {
         window.location.assign('/jakal');
       })
@@ -50,6 +51,7 @@ class Login extends React.Component {
           sending: false,
           error: e && e.response && e.response.data && e.response.data.error,
         });
+        console.error(`Post to ${url}, error: ${e}`);
       });
   }
 
