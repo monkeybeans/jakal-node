@@ -22,7 +22,7 @@ class Menu extends React.Component {
 
   handleLogout = () => {
     api
-      .get('/jakal/logout')
+      .get('/logout')
       .then(() => window.location.reload(true))
       .catch(e => console.error(e));
   }

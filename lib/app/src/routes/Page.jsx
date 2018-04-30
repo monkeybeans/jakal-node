@@ -8,18 +8,12 @@ import Identify from './views/Identify';
 import ErrorNotFound from './views/ErrorNotFound';
 // import { Navigation } from '../components/menu/Navigation';
 
-// @TODO; fix the // from the hosting server
 const App = props => (
   <Provider store={props.store}>
     <Switch>
-      <Route exact path="/jakal/" component={Collaboration} />
-      <Route exact path="//jakal/" component={Collaboration} />
-
-      <Route exact path="/jakal/stats" component={Statistics} />
-      <Route exact path="//jakal/stats" component={Statistics} />
-
-      <Route exact path="/jakal/auth" component={Identify} />
-      <Route exact path="//jakal/auth" component={Identify} />
+      <Route exact path="/" component={Collaboration} />
+      <Route exact path="/stats" component={Statistics} />
+      <Route exact path="/auth" component={Identify} />
       <Route component={ErrorNotFound} />
     </Switch>
   </Provider>

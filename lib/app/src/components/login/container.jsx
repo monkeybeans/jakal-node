@@ -40,11 +40,11 @@ class Login extends React.Component {
 
     const formJson = formFieldsToJson(target, ['username', 'password', 'email']);
     const path = register ? 'register' : 'authenticate';
-    const url = `/jakal/${path}`;
+    const url = `/${path}`;
     return api
       .post(url, formJson)
       .then(() => {
-        window.location.assign('/jakal');
+        window.location.assign('/');
       })
       .catch((e) => {
         this.setState({
@@ -63,8 +63,8 @@ class Login extends React.Component {
         <Modal.Header>Login or Register</Modal.Header>
         <Modal.Content>
           <Form onSubmit={this.registerOrLogin} error={!!error} loading={sending}>
-            <Form.Input type="text" placeholder="Pick a username" required minLength="4" name="username" autoFocus />
-            <Form.Input type="password" placeholder="Type a password" required minLength="6" name="password" />
+            <Form.Input type="text" placeholder="Enter your username" required minLength="4" name="username" autoFocus />
+            <Form.Input type="password" placeholder="Type the password" required minLength="6" name="password" />
             { register
               ? <Form.Input type="email" placeholder="Your email goes here" required name="email" />
               : null
@@ -80,7 +80,7 @@ class Login extends React.Component {
               fluid
               labelPosition="right"
               icon="checkmark"
-              content="Hit Me"
+              content="Do Login"
             />
           </Form>
           <Divider horizontal>Or</Divider>
