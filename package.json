@@ -8,7 +8,7 @@
     "_build:server": "BABEL_ENV=server babel ./lib --out-dir ./dist --soure-map --copy-files",
     "_do:triggerschedule": "node -e 'require(\"./dist/server/src/scheduled\").actUponPeriodChange()'",
     "test:app": "echo \"All good for now...\" && exit 0 #TOOL",
-    "test:server": "NODE_ENV=test mocha --require ./server/mocha.setup.js ./server/src/**/*.test.js",
+    "test:server": "BABEL_ENV=server NODE_ENV=test mocha --require ./lib/server/mocha.setup.js ./lib/server/src/**/*.test.js",
     "dev:build": "NODE_ENV=development npm run _build:app -- -w & NODE_ENV=development npm run _build:server -- -w",
     "dev:start": "NODE_ENV=development nodemon ./dist/server/src/index.js",
     "dev:triggerschedule": "NODE_ENV=development npm run _do:triggerschedule",
