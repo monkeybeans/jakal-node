@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+  <h1>{{ username }} you have not voted yet</h1>
+  <p>
+    So here is a reminder...
+  </p>
+  <ul>
+  {{#if suggestions}}
+    {{#each suggestions}}
+      <li>{{ this.name }}</li>
+    {{/each}}
+    {{else}}
+      <li>No instruments this month :/</li>
+  {{/if}}
+  </ul>
+  <p>
+    Go to <a href="{{ SITE_URL }}">jakal page</a> and see the other</br>
+    results.
+  </p>
+</body>
+</html>
