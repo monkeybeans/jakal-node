@@ -12,10 +12,10 @@
     "dev:build": "NODE_ENV=development npm run _build:app -- --mode=development -w & NODE_ENV=development npm run _build:server -- -w",
     "dev:start": "NODE_ENV=development nodemon ./dist/server/src/index.js",
     "dev:triggerschedule": "NODE_ENV=development npm run _do:triggerschedule",
-    "prebuild": "/bin/rm -rf ./dist",
-    "build": "NODE_ENV=production npm run _build:app -- --mode=production && NODE_ENV=production npm run _build:server",
-    "start": "echo 'Start with you favourite [node|pm2|...]' $npm_package_main",
-    "triggerschedule": "NODE_ENV=production npm run _do:triggerschedule"
+    "preprod:build": "/bin/rm -rf ./dist",
+    "prod:build": "NODE_ENV=production npm run _build:app -- --mode=production && NODE_ENV=production npm run _build:server",
+    "prod:start": "echo 'Start with you favourite [node|pm2|...]' $npm_package_main",
+    "prod:triggerschedule": "NODE_ENV=production npm run _do:triggerschedule"
   },
   "repository": {
     "type": "git",

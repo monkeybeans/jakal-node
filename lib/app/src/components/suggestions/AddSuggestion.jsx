@@ -27,6 +27,8 @@ export class AddSuggestion extends React.Component {
   constructor(props) {
     super(props);
 
+    this.nameInput = React.createRef();
+
     this.state = {
       showInput: false,
       sending: false,
@@ -60,6 +62,8 @@ export class AddSuggestion extends React.Component {
 
       setTimeout(() => {
         this.reset();
+        console.log('this.nameInput: ', this.nameInput);
+        // this.nameInput.current.focus();
       }, 1500);
     }
   }
@@ -99,10 +103,12 @@ export class AddSuggestion extends React.Component {
         <Form.Input
           name="name"
           type="text"
+          autoFocus
           value={name.val}
           onChange={this.handleOnChange}
           onBlur={this.handleOnBlur}
           placeholder="Name of the suggestion"
+          ref={this.nameInput}
         />
         <TextArea
           name="description"

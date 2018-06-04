@@ -10,7 +10,8 @@
     "sourceType": "module",
   },
   "rules": {
-    "no-console": 0
+    "no-console": 0,
+    "max-len": [2, 160, 4],
   },
   "globals": {
     "Promise": true,
