@@ -10,7 +10,7 @@ class Billboard extends React.Component {
       <div styleName="root">
         <Menu />
         <Grid>
-          <Grid.Column computer={11} mobile={16}>
+          <Grid.Column computer={10} mobile={16}>
             <h1>Statistics</h1>
             <Statistics />
           </Grid.Column>

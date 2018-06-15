@@ -27,7 +27,7 @@ export class Generic extends React.Component {
     const voteRation = votingNumbers.totalNumVotes / votingNumbers.totalNumSuggestions;
     return (
       <div>
-        <Card centered>
+        <Card centered raised fluid>
           <Card.Content>
             <Card.Header>Most active submitters</Card.Header>
           </Card.Content>
@@ -37,7 +37,7 @@ export class Generic extends React.Component {
             </Feed>
           </Card.Content>
         </Card>
-        <Card centered>
+        <Card centered raised fluid>
           <Statistic label="Vote / Suggestion" value={voteRation.toFixed(2)} />
         </Card>
       </div>
