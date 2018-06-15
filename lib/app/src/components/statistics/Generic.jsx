@@ -1,5 +1,6 @@
 import React from 'react';
 import P from 'prop-types';
+import { Card, Feed, Statistic } from 'semantic-ui-react';
 
 export class Generic extends React.Component {
   static propTypes = {
@@ -7,7 +8,15 @@ export class Generic extends React.Component {
   }
 
   renderSubmitter = submitters => submitters.map(s => (
-    <span>{s.username}(={s.numOfSubmitted}) </span>
+    <Feed.Event>
+      <Feed.Label icon="comments" />
+      <Feed.Content>
+        <Feed.Summary>
+          {s.username}
+        </Feed.Summary>
+        <Feed.Extra content={`submitted: ${s.numOfSubmitted}`} />
+      </Feed.Content>
+    </Feed.Event>
   ))
 
   render() {
@@ -18,11 +27,19 @@ export class Generic extends React.Component {
     const voteRation = votingNumbers.totalNumVotes / votingNumbers.totalNumSuggestions;
     return (
       <div>
-        <p>Most active submitters: { this.renderSubmitter(mostActiveSubmitters) }</p>
-        <p>
-          Number of votes per suggestion: { voteRation.toFixed(2) }
-        </p>
-
+        <Card centered>
+          <Card.Content>
+            <Card.Header>Most active submitters</Card.Header>
+          </Card.Content>
+          <Card.Content>
+            <Feed>
+              { this.renderSubmitter(mostActiveSubmitters) }
+            </Feed>
+          </Card.Content>
+        </Card>
+        <Card centered>
+          <Statistic label="Vote / Suggestion" value={voteRation.toFixed(2)} />
+        </Card>
       </div>
     );
   }
