@@ -7,6 +7,38 @@ export class Generic extends React.Component {
     statistics: P.object.isRequired,
   }
 
+  renderSingleData = (label, data) => (
+    <Card centered raised fluid>
+      <Statistic label={`${label} (${data.meta})`} value={data.value} />
+    </Card>
+  )
+
+  renderMultiData = (label, data) => (
+    <Card centered raised fluid>
+      <Card.Content>
+        <Card.Header>{ label }</Card.Header>
+      </Card.Content>
+      <Card.Content>
+        <Feed>
+          { data.map(this.renderFeed) }
+        </Feed>
+      </Card.Content>
+    </Card>
+  )
+
+  renderFeed = ({ value, meta }) => (
+    <Feed.Event>
+      <Feed.Label icon="comments" />
+      <Feed.Content>
+        <Feed.Summary>
+          { meta }
+        </Feed.Summary>
+        <Feed.Extra content={value} />
+      </Feed.Content>
+    </Feed.Event>
+  )
+
+
   renderSubmitter = submitters => submitters.map(s => (
     <Feed.Event>
       <Feed.Label icon="comments" />
@@ -22,24 +54,23 @@ export class Generic extends React.Component {
   render() {
     const { statistics } = this.props;
 
-    const { mostActiveSubmitters, votingNumbers } = statistics;
+    console.log('statistics: ', statistics);
 
-    const voteRation = votingNumbers.totalNumVotes / votingNumbers.totalNumSuggestions;
+    const { stats } = statistics;
+
+    // const voteRation = votingNumbers.totalNumVotes / votingNumbers.totalNumSuggestions;
+
     return (
       <div>
-        <Card centered raised fluid>
-          <Card.Content>
-            <Card.Header>Most active submitters</Card.Header>
-          </Card.Content>
-          <Card.Content>
-            <Feed>
-              { this.renderSubmitter(mostActiveSubmitters) }
-            </Feed>
-          </Card.Content>
-        </Card>
-        <Card centered raised fluid>
-          <Statistic label="Vote / Suggestion" value={voteRation.toFixed(2)} />
-        </Card>
+        { stats.map((s) => {
+            const { label, data } = s;
+            if (Array.isArray(s.data)) {
+              return this.renderMultiData(label, data);
+            }
+
+            return this.renderSingleData(label, data);
+          })
+        }
       </div>
     );
   }
