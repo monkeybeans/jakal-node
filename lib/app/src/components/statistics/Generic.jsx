@@ -54,11 +54,7 @@ export class Generic extends React.Component {
   render() {
     const { statistics } = this.props;
 
-    console.log('statistics: ', statistics);
-
     const { stats } = statistics;
-
-    // const voteRation = votingNumbers.totalNumVotes / votingNumbers.totalNumSuggestions;
 
     return (
       <div>
